@@ -7,6 +7,7 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
     ArregloId = new int [NumeroNodosReales];
     Divergencias = new float [NumeroNodosReales];
     MatrizDistancias = new float * [NumeroNodosReales];
+    Orden = 0;
     //MatrizDistanciasModificadas = new float * [NumeroElementos];
     //la primera matriz de distanciasI debe ser igual
     for(int i = 0; i < NumeroNodosReales; i++){//quiza sea util si la matriz no esta de la forma que deseo
@@ -219,9 +220,13 @@ void NJ::CrearNodoVirtual(int i, int j){//es que deberia recibir algun dato, nom
     Nodos[j]->Padre = Nodos[nv];
     Nodos[j]->PadreId = Nodos[nv]->Id;//o odria ser solo NumeroNodos
     Nodos[j]->DistanciaPadre = Lj;
+    Nodos[j]->Orden = Orden;//iteracion
+    Orden++;
     Nodos[i]->Padre = Nodos[nv];
     Nodos[i]->PadreId = Nodos[nv]->Id;//o odria ser solo NumeroNodos
     Nodos[i]->DistanciaPadre = Li;
+    Nodos[i]->Orden = Orden;//iteracion
+    Orden++;
     NumeroNodosVirtuales++;
 
     //falta agregar lo de las ditancias de los branchs

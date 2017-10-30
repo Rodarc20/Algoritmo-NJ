@@ -27,6 +27,7 @@ void ImprimirNodosPex(Nodo ** nodos, int n){
         cout << "<x-coordinate value=\"" << i*6 << "\"/>" << endl;
         cout << "<y-coordinate value=\"" << i*6 << "\"/>" << endl;
         cout << "<url value=\"" << "\"/>" << endl;
+        cout << "<order value=\"" << nodos[i]->Orden << "\"/>" << endl;//no esta en el pex
         cout << "<scalars>" << endl;
         cout << "<scalar name=\"cdata\" value=\"" << 0.0 << "\"/>" << endl;
         cout << "</scalars>" << endl;

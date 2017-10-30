@@ -18,6 +18,7 @@ class NJ {
         int NumeroNodos;
         int NumeroNodosReales;
         int NumeroNodosVirtuales;
+        int Orden;
         //matriz de distancia inicial, del tamaño de los nodos reales
         float ** MatrizDistancias;
         //matriz de distancia para las iteraciones
@@ -30,7 +31,6 @@ class NJ {
         int DimensionMatrizSB;//esta se va reduciendo en cada itaracion
         int GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Arbol);//devolvera un arreglo con todos los nodos, incluyendo el tamaño
         void NuevaMatrizDistancias(int i, int j);
-        float So();
         float Mij(int i, int j);//este es el Sij, solo que con otro nombre
         void CrearNodoVirtual(int i, int j);
         //void MezclarHojas(int k, int i, int j);
