@@ -3,19 +3,17 @@
 int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Arbol){
     //copiar la matriz de distancias//quiza no neceiso modificarla
     //esta amtriz recibida peuede ser la matriz inicial, quiza no sea necesario copiar o almacenarla en esta clase
-    NumeroNodosReales = NumeroElementos;
-    NumeroNodosVirtuales = NumeroElementos-2;
-    DimensionMatrizI= NumeroElementos;
-    ArregloId = new int [NumeroElementos];
-    Divergencias = new float [NumeroElementos];
-    MatrizDistancias = new float * [NumeroElementos];
+    DimensionMatrizI= NumeroNodosReales;
+    ArregloId = new int [NumeroNodosReales];
+    Divergencias = new float [NumeroNodosReales];
+    MatrizDistancias = new float * [NumeroNodosReales];
     //MatrizDistanciasModificadas = new float * [NumeroElementos];
     //la primera matriz de distanciasI debe ser igual
-    for(int i = 0; i < NumeroElementos; i++){//quiza sea util si la matriz no esta de la forma que deseo
-        MatrizDistancias[i] = new float [NumeroElementos];
+    for(int i = 0; i < NumeroNodosReales; i++){//quiza sea util si la matriz no esta de la forma que deseo
+        MatrizDistancias[i] = new float [NumeroNodosReales];
         //MatrizDistanciasModificadas[i] = new float [NumeroElementos];
         ArregloId[i] = i;
-        for(int j = 0; j < NumeroElementos; j++){
+        for(int j = 0; j < NumeroNodosReales; j++){
             MatrizDistancias[i][j] = MatrizDistancia[i][j];
         }
     }
@@ -26,7 +24,7 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
     //cout << "copiado de datos correcto" << endl;
     //zona de blce, calcular la matriz de dstancias y luego calcular la matriz de sumas, escoger el menro y calcular la nueva matriz de distancias
     //creacion de matrices
-    for(int it = 0; it < NumeroElementos-2; it++){//con -2 llego los hago el algoritmo hasta el final
+    for(int it = 0; it < NumeroNodosReales-2; it++){//con -2 llego los hago el algoritmo hasta el final
         //bulces
         //cout << "iteracion: " << it << endl;
         for(int i = 0; i < DimensionMatrizI; i++){
@@ -61,7 +59,7 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
                 //}
             }
         }
-        if(it == NumeroElementos-3){//este caso deberia estar mejo estructurado
+        if(it == NumeroNodosReales-3){//este caso deberia estar mejo estructurado
             //cout << "caso especial: " << it << endl;
             float DMin = numeric_limits<float>::max();//valor maximo
             //copiada quiza no sea util
@@ -97,7 +95,9 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
         //substituimos el ide del nodo virrual en el i
         
         //ArregloId[iMin] = NumeroNodos-1;//como  j tiene que ser mayo que i e cambiado
-        ArregloId[jMin] = NumeroNodos-1;//como  j tiene que ser mayo que i e cambiado
+        //ArregloId[jMin] = NumeroNodos-1;//como  j tiene que ser mayo que i e cambiado
+        //esto deberia ser el numero nodo actual
+        ArregloId[jMin] = NumeroNodosReales + NumeroNodosVirtuales - 1;
 
         NuevaMatrizDistancias(iMin, jMin);//ya se redujo el tamaño de la matriz//aqui dentro esta el n--
         //cout << "creada nueva matriz de distancias" << endl;
@@ -206,34 +206,23 @@ void NJ::CrearNodoVirtual(int i, int j){//es que deberia recibir algun dato, nom
     float Li = MatrizDistancias[i][j] - Lj;
     i = ArregloId[i];
     j = ArregloId[j];
-    Nodo ** temp = Nodos;
-    Nodos = new Nodo * [NumeroNodos + 1];
-    for(int p = 0; p < NumeroNodos; p++){
-        Nodos[p] = temp[p];
-    }
-    Nodos[NumeroNodos] = new Nodo;//lo nodos los debo borrar con new de tener que hacerlo?
-    Nodos[NumeroNodos]->Id = NumeroNodos;
-    Nodos[NumeroNodos]->Valido = 0;//si sera virtual o real
-    delete [] temp;
-    //cout << "copiado nodos" << endl;
-    //crear las asociaciones// aqui se supone que se crea lo de las banch lenght
-    //las distancias al padre
-    Nodos[NumeroNodos]->HijosId[0] = j;
-    Nodos[NumeroNodos]->HijosId[1] = i;
-    Nodos[NumeroNodos]->Hijos[0] = Nodos[j];
-    Nodos[NumeroNodos]->Hijos[1] = Nodos[i];
-    Nodos[NumeroNodos]->DistanciasHijos[0] = Lj;
-    Nodos[NumeroNodos]->DistanciasHijos[1] = Li;
-    Nodos[NumeroNodos]->Orden = 0;//iteracion
-    Nodos[j]->Padre = Nodos[NumeroNodos];
-    Nodos[j]->PadreId = Nodos[NumeroNodos]->Id;//o odria ser solo NumeroNodos
+
+    int nv = NumeroNodosReales + NumeroNodosVirtuales;
+
+    Nodos[nv]->HijosId[0] = j;
+    Nodos[nv]->HijosId[1] = i;
+    Nodos[nv]->Hijos[0] = Nodos[j];
+    Nodos[nv]->Hijos[1] = Nodos[i];
+    Nodos[nv]->DistanciasHijos[0] = Lj;
+    Nodos[nv]->DistanciasHijos[1] = Li;
+    Nodos[nv]->Orden = 0;//iteracion
+    Nodos[j]->Padre = Nodos[nv];
+    Nodos[j]->PadreId = Nodos[nv]->Id;//o odria ser solo NumeroNodos
     Nodos[j]->DistanciaPadre = Lj;
-    Nodos[i]->Padre = Nodos[NumeroNodos];
-    Nodos[i]->PadreId = Nodos[NumeroNodos]->Id;//o odria ser solo NumeroNodos
+    Nodos[i]->Padre = Nodos[nv];
+    Nodos[i]->PadreId = Nodos[nv]->Id;//o odria ser solo NumeroNodos
     Nodos[i]->DistanciaPadre = Li;
-    //falta hacer los calculos de las distancias
-    //cout << "realcionando" << endl;
-    NumeroNodos++;
+    NumeroNodosVirtuales++;
 
     //falta agregar lo de las ditancias de los branchs
 //afuera de esta funcon se maneja lo de las hojas para los nodos virtaules, 
@@ -245,16 +234,23 @@ void NJ::DatosIniciales(string * Datos, int n){
     //en teoria siempre se necesitan la misma cantidad de nodos virtuales, ya que el algoritmos siempre da las iteraciones fijas, solo depende de si n es par o impar;
     //por lo lanto se pueden crear de una vez los nodos virtuales, y solo llenarlos con la impofrmacion pertinenete y determnando a lcula llear, en cada iteracion, en lugar de estar creandolos en cada iteracion
     //crear los nodos reales
-    NumeroNodos = n;
+    NumeroNodos = n + n - 2;
     NumeroNodosReales = n;
-    Nodos = new Nodo * [n];
-    for(int i = 0; i < n; i++){
+    Nodos = new Nodo * [NumeroNodos];
+    for(int i = 0; i < NumeroNodosReales; i++){
         Nodos[i] = new Nodo;
         Nodos[i]->Id = i;
         Nodos[i]->Valido = 1;//si sera virtual o real
         Nodos[i]->Nombre = Datos[i];
-        Nodos[i]->AgregarHoja(i);//esta linea podria ser lenta
     }
+    for(int i = NumeroNodosReales; i < NumeroNodos; i++){//para crear los nodos virtuales
+        Nodos[i] = new Nodo;
+        Nodos[i]->Id = i;
+        Nodos[i]->Valido = 0;//si sera virtual o real
+    }
+    NumeroNodosVirtuales = 0;//aun no los he creado coomo parte del algoritmo,
+    //esta variable me ayudara a iterar para trabajr sobre le nodo virtual aporpiado,
+    //lo que nates hacian cuando incrementaba la variable NUmeroNodos en cada iteracion
 }
 
 NJ::NJ(){

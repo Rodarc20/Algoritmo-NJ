@@ -80,6 +80,7 @@ void LeerDatosPex(float ** & m, string * & d, int & n){//lee matrices cuadrasdas
             m[j][i] = m[i][j];//esto se queita si solo quiero almacenar la matriz inferior
         }
     }
+    //devuelvo matrices cuadradas, con los datos reflejados
     delete [] clase;
 }
 
@@ -103,7 +104,7 @@ int main(){
     NJ nj;
     Nodo ** result;
     nj.DatosIniciales(d, n);
-    int tam = nj.GenerarArbol(m, n, result);
+    int tam = nj.GenerarArbol(m, n, result);//en toroia no encesitorecibir n ya que ya lo recibo en datos iniciales
     //ImprimirNodos(result, tam);
     ImprimirNodosPex(result, tam);
     for(int i = 0; i < n; i++){
