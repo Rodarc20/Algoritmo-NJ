@@ -42,17 +42,19 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
         int prioridadMin = -1;
         float MMin = numeric_limits<float>::max();//valor maximo
         //copiada quiza no sea util
-        for(int i = 0; i < DimensionMatrizI; i++){
-            for(int j = 0; j < DimensionMatrizI; j++){
-                //no calcular si i y j son iguales; y no hacer caluclo doble, es decir solo recorrel el triangulo superior o inferior
-                if(i != j){
+        for(int i = 1; i < DimensionMatrizI; i++){
+            for(int j = 0; j < i; j++){//para recorrer la matriz tringula inferior
+                if(i != j){//ya no es necesario este if
                     int prioridad = (int) Nodos[ArregloId[i]]->Valido + (int) Nodos[ArregloId[j]]->Valido;
-                    MatrizDistanciasModificadas[i][j] = Mij(i,j);//no es necasrio almacenar
-                    if(MatrizDistanciasModificadas[i][j] <= MMin && prioridadMin < prioridad){//en lugar de matriz deberia se solo una varible temporal
+                    //MatrizDistanciasModificadas[i][j] = Mij(i,j);//no es necasrio almacenar
+                    //if(MatrizDistanciasModificadas[i][j] <= MMin && prioridadMin < prioridad){//en lugar de matriz deberia se solo una varible temporal
+                    float ActualMij = Mij(i,j);
+                    if(ActualMij <= MMin && prioridadMin < prioridad){//en lugar de matriz deberia se solo una varible temporal
                     //if(MatrizDistanciasModificadas[i][j] < MMin){//en lugar de matriz deberia se solo una varible temporal
                         iMin = i;
                         jMin = j;
-                        MMin = MatrizDistanciasModificadas[i][j];
+                        MMin = ActualMij;
+                        //MMin = MatrizDistanciasModificadas[i][j];
                         prioridadMin = prioridad;
                     }
                 }
