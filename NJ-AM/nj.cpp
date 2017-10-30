@@ -27,7 +27,7 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
     //creacion de matrices
     for(int it = 0; it < NumeroElementos-2; it++){//con -2 llego los hago el algoritmo hasta el final
         //bulces
-        cout << "iteracion: " << it << endl;
+        //cout << "iteracion: " << it << endl;
         for(int i = 0; i < DimensionMatrizI; i++){
             Divergencias[i] = 0;
             for(int j = 0; j < DimensionMatrizI; j++){
@@ -42,7 +42,7 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
         int prioridadMin = -1;
         float MMin = numeric_limits<float>::max();//valor maximo
         //copiada quiza no sea util
-        for(int i = 1; i < DimensionMatrizI; i++){
+        for(int i = 1; i < DimensionMatrizI; i++){//la forma de recorrer hace que i > j siempre primera posicion (1,0)
             for(int j = 0; j < i; j++){//para recorrer la matriz tringula inferior
                 //if(i != j){//ya no es necesario este if
                     int prioridad = (int) Nodos[ArregloId[i]]->Valido + (int) Nodos[ArregloId[j]]->Valido;
@@ -51,7 +51,6 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
                     float ActualMij = Mij(i,j);
                     if(ActualMij <= MMin && prioridadMin < prioridad){//en lugar de matriz deberia se solo una varible temporal
                     //if(MatrizDistanciasModificadas[i][j] < MMin){//en lugar de matriz deberia se solo una varible temporal
-                        cout << "minimo" << endl;
                         iMin = i;
                         jMin = j;
                         MMin = ActualMij;
@@ -123,19 +122,50 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
 }
 
 float NJ::Mij(int i, int j){// en espacio de arreglo id 
-    if(i > j){
-        int temp = i;
-        i = j;
-        j = temp;
-        //en lugar de esto, solo cambiar las variables o el uso de las variables, para que trabajn distinto
-    }
+    //como trabajo sobre la matriz inferior, esta bien lo i j que recibo, que me marque el (1,0)
     return MatrizDistancias[i][j] - (Divergencias[i] + Divergencias[j])/(DimensionMatrizI-2);
 }
 
 void NJ::NuevaMatrizDistancias(int i, int j){//i y j son los nodos que fueron desginados como similares en esa iteracion
     //antes de ahcer el corrimiento seria buno calcular las deistancias para el nuevo, y solo hacer el cambio con i
+    //como el j es el mas a la izquierda, ese lo dejo, y muevo el i hacia el final de la matriz
     //cout << "Nueva matriz de distacnias " << i << ", " << j << endl;//se escojo e primero
-    if(i > j){
+    float Distanciaij = MatrizDistancias[i][j];//este se puede dejar asi, ya que uso la matriz inferior
+    //estos i y j, estan sobre el ArrgloId
+    for(int k = i+1; k < DimensionMatrizI; k++){
+        float * temp = MatrizDistancias[k-1];
+        MatrizDistancias[k-1] = MatrizDistancias[k];//deberia borrar la deschada? creo que no
+        MatrizDistancias[k] = temp;
+        int tempId = ArregloId[k-1];//solo debe modificar lo concerniete al arreglo j
+        ArregloId[k-1] = ArregloId[k];//a la vez que cambio debo actulizar sus poseisiones en el arregloID
+        ArregloId[k] = tempId;
+        
+    }
+    for(int k = 0; k < DimensionMatrizI; k++){
+        for(int h = i+1; h < DimensionMatrizI; h++){
+            float tempD = MatrizDistancias[k][h-1];
+            MatrizDistancias[k][h-1] = MatrizDistancias[k][h];
+            MatrizDistancias[k][h] = tempD;
+        }
+    }
+    //cout << "i al final" << endl;
+    //ImprimirArreglo(ArregloId, DimensionMatrizI);
+    //ImprimirMatriz(MatrizDistancias, DimensionMatrizI);
+    DimensionMatrizI--;
+    //j ahora esta en la posicion DimensionMatriz
+    for(int k = 0; k < DimensionMatrizI; k++){
+        //en este punto ya debe estar el nodo virtual nuevo en la posicion i, ya que no se movera alli, quiza yua este antes de entrar a esta funcion
+        if(k != j){
+            //cout << k << ":: " << MatrizDistancias[i][k] << "+" << MatrizDistancias[DimensionMatrizI][k] << "-" <<  Distanciaij << endl;
+            MatrizDistancias[j][k] = (MatrizDistancias[j][k] + MatrizDistancias[DimensionMatrizI][k] - Distanciaij)/2;
+            MatrizDistancias[k][j] = MatrizDistancias[j][k];//quiza no sea necesario
+        }
+        else{
+            MatrizDistancias[j][k] = 0;
+            MatrizDistancias[k][j] = 0;
+        }
+    }
+    /*if(i > j){
         int temp = i;
         i = j;
         j = temp;
@@ -175,7 +205,7 @@ void NJ::NuevaMatrizDistancias(int i, int j){//i y j son los nodos que fueron de
             MatrizDistancias[i][k] = 0;
             MatrizDistancias[k][i] = 0;
         }
-    }
+    }*/
     //cout << "fin creacio nnueva matriz" << endl;
     //en que momento ubico al nuevo nodo viertual cundo lo creo?
     //
@@ -209,7 +239,41 @@ void NJ::CrearNodoVirtual(int i, int j){//es que deberia recibir algun dato, nom
     //que pasa si quiero crear mas nodos reales? mm en teoria no puedo, ya que habira que recalcular todo
     //creo que esto sera para crear nodos virtuales
     ////recibe los i y j del arreglo de nodos
-    if(i > j){
+    //aqui recibo los i y j siendo i > j, por lo tanto lo que hacia con j debo hacerlo con y y lo que hacia con i debo hacerlo conj
+    //float Lj = MatrizDistancias[j][i]/2 + (Divergencias[j] - Divergencias[i])/(2*(DimensionMatrizI-2));
+    //float Li = MatrizDistancias[j][i] - Lj;
+    float Lj = MatrizDistancias[i][j]/2 + (Divergencias[j] - Divergencias[i])/(2*(DimensionMatrizI-2));
+    float Li = MatrizDistancias[i][j] - Lj;
+    i = ArregloId[i];
+    j = ArregloId[j];
+    Nodo ** temp = Nodos;
+    Nodos = new Nodo * [NumeroNodos + 1];
+    for(int p = 0; p < NumeroNodos; p++){
+        Nodos[p] = temp[p];
+    }
+    Nodos[NumeroNodos] = new Nodo;//lo nodos los debo borrar con new de tener que hacerlo?
+    Nodos[NumeroNodos]->Id = NumeroNodos;
+    Nodos[NumeroNodos]->Valido = 0;//si sera virtual o real
+    delete [] temp;
+    //cout << "copiado nodos" << endl;
+    //crear las asociaciones// aqui se supone que se crea lo de las banch lenght
+    //las distancias al padre
+    Nodos[NumeroNodos]->HijosId[0] = j;
+    Nodos[NumeroNodos]->HijosId[1] = i;
+    Nodos[NumeroNodos]->Hijos[0] = Nodos[j];
+    Nodos[NumeroNodos]->Hijos[1] = Nodos[i];
+    Nodos[NumeroNodos]->DistanciasHijos[0] = Lj;
+    Nodos[NumeroNodos]->DistanciasHijos[1] = Li;
+    Nodos[NumeroNodos]->Orden = 0;//iteracion
+    Nodos[j]->Padre = Nodos[NumeroNodos];
+    Nodos[j]->PadreId = Nodos[NumeroNodos]->Id;//o odria ser solo NumeroNodos
+    Nodos[j]->DistanciaPadre = Lj;
+    Nodos[i]->Padre = Nodos[NumeroNodos];
+    Nodos[i]->PadreId = Nodos[NumeroNodos]->Id;//o odria ser solo NumeroNodos
+    Nodos[i]->DistanciaPadre = Li;
+    //falta hacer los calculos de las distancias
+    //cout << "realcionando" << endl;
+    /*if(i > j){
         int temp = i;
         i = j;
         j = temp;
@@ -245,7 +309,7 @@ void NJ::CrearNodoVirtual(int i, int j){//es que deberia recibir algun dato, nom
     Nodos[j]->PadreId = Nodos[NumeroNodos]->Id;//o odria ser solo NumeroNodos
     Nodos[j]->DistanciaPadre = Lj;
     //falta hacer los calculos de las distancias
-    //cout << "realcionando" << endl;
+    //cout << "realcionando" << endl;*/
     NumeroNodos++;
 
     //falta agregar lo de las ditancias de los branchs
