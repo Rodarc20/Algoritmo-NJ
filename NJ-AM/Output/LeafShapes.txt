@@ -12,7 +12,7 @@
 <label name="title" value="ag_1.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="77" distance="8936.42"/>
+<parent value="44" distance="30779.9"/>
 </vertex>
 <vertex id="1">
 <valid value="1"/>
@@ -26,7 +26,7 @@
 <label name="title" value="ag_10.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="81" distance="13342.5"/>
+<parent value="44" distance="57371.7"/>
 </vertex>
 <vertex id="2">
 <valid value="1"/>
@@ -40,7 +40,7 @@
 <label name="title" value="ag_2.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="81" distance="14546.6"/>
+<parent value="45" distance="35210.7"/>
 </vertex>
 <vertex id="3">
 <valid value="1"/>
@@ -54,7 +54,7 @@
 <label name="title" value="ag_3.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="83" distance="25419.7"/>
+<parent value="46" distance="10851.3"/>
 </vertex>
 <vertex id="4">
 <valid value="1"/>
@@ -68,7 +68,7 @@
 <label name="title" value="ag_4.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="76" distance="13398.9"/>
+<parent value="66" distance="31783.1"/>
 </vertex>
 <vertex id="5">
 <valid value="1"/>
@@ -82,7 +82,7 @@
 <label name="title" value="ag_5.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="82" distance="37126.8"/>
+<parent value="45" distance="37417.8"/>
 </vertex>
 <vertex id="6">
 <valid value="1"/>
@@ -96,7 +96,7 @@
 <label name="title" value="ag_6.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="82" distance="26660.9"/>
+<parent value="46" distance="38862.2"/>
 </vertex>
 <vertex id="7">
 <valid value="1"/>
@@ -110,7 +110,7 @@
 <label name="title" value="ag_7.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="79" distance="9910.96"/>
+<parent value="47" distance="18420.3"/>
 </vertex>
 <vertex id="8">
 <valid value="1"/>
@@ -124,7 +124,7 @@
 <label name="title" value="ag_8.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="78" distance="8500.21"/>
+<parent value="47" distance="9407.31"/>
 </vertex>
 <vertex id="9">
 <valid value="1"/>
@@ -138,7 +138,7 @@
 <label name="title" value="ag_9.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="80" distance="10959"/>
+<parent value="61" distance="32948.4"/>
 </vertex>
 <vertex id="10">
 <valid value="1"/>
@@ -152,7 +152,7 @@
 <label name="title" value="bg_1.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="70" distance="80445.1"/>
+<parent value="52" distance="39746.7"/>
 </vertex>
 <vertex id="11">
 <valid value="1"/>
@@ -166,7 +166,7 @@
 <label name="title" value="bg_10.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="50" distance="117.786"/>
+<parent value="48" distance="30899.3"/>
 </vertex>
 <vertex id="12">
 <valid value="1"/>
@@ -180,7 +180,7 @@
 <label name="title" value="bg_2.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="51" distance="10258.9"/>
+<parent value="48" distance="11451.1"/>
 </vertex>
 <vertex id="13">
 <valid value="1"/>
@@ -194,7 +194,7 @@
 <label name="title" value="bg_3.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="55" distance="18987.1"/>
+<parent value="49" distance="53778.3"/>
 </vertex>
 <vertex id="14">
 <valid value="1"/>
@@ -208,7 +208,7 @@
 <label name="title" value="bg_4.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="74" distance="138674"/>
+<parent value="49" distance="88646.7"/>
 </vertex>
 <vertex id="15">
 <valid value="1"/>
@@ -222,7 +222,7 @@
 <label name="title" value="bg_5.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="52" distance="18379.9"/>
+<parent value="50" distance="18323.7"/>
 </vertex>
 <vertex id="16">
 <valid value="1"/>
@@ -236,7 +236,7 @@
 <label name="title" value="bg_6.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="52" distance="9175.17"/>
+<parent value="50" distance="9231.37"/>
 </vertex>
 <vertex id="17">
 <valid value="1"/>
@@ -250,7 +250,7 @@
 <label name="title" value="bg_7.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="50" distance="361.147"/>
+<parent value="51" distance="82316.2"/>
 </vertex>
 <vertex id="18">
 <valid value="1"/>
@@ -264,7 +264,7 @@
 <label name="title" value="bg_8.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="55" distance="43268.9"/>
+<parent value="51" distance="76027.4"/>
 </vertex>
 <vertex id="19">
 <valid value="1"/>
@@ -278,7 +278,7 @@
 <label name="title" value="bg_9.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="53" distance="48422.3"/>
+<parent value="52" distance="89960.8"/>
 </vertex>
 <vertex id="20">
 <valid value="1"/>
@@ -292,7 +292,7 @@
 <label name="title" value="cg_1.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="44" distance="101442"/>
+<parent value="53" distance="184978"/>
 </vertex>
 <vertex id="21">
 <valid value="1"/>
@@ -306,7 +306,7 @@
 <label name="title" value="cg_10.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="73" distance="28350.7"/>
+<parent value="68" distance="34010.5"/>
 </vertex>
 <vertex id="22">
 <valid value="1"/>
@@ -320,7 +320,7 @@
 <label name="title" value="cg_2.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="62" distance="43719.8"/>
+<parent value="53" distance="28576.2"/>
 </vertex>
 <vertex id="23">
 <valid value="1"/>
@@ -334,7 +334,7 @@
 <label name="title" value="cg_3.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="67" distance="71293.9"/>
+<parent value="58" distance="28159.7"/>
 </vertex>
 <vertex id="24">
 <valid value="1"/>
@@ -348,7 +348,7 @@
 <label name="title" value="cg_4.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="68" distance="24923.5"/>
+<parent value="68" distance="42022.1"/>
 </vertex>
 <vertex id="25">
 <valid value="1"/>
@@ -362,7 +362,7 @@
 <label name="title" value="cg_5.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="49" distance="34495.1"/>
+<parent value="57" distance="52311.9"/>
 </vertex>
 <vertex id="26">
 <valid value="1"/>
@@ -376,7 +376,7 @@
 <label name="title" value="cg_6.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="69" distance="21637.3"/>
+<parent value="69" distance="37285.5"/>
 </vertex>
 <vertex id="27">
 <valid value="1"/>
@@ -390,7 +390,7 @@
 <label name="title" value="cg_7.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="59" distance="9153.66"/>
+<parent value="54" distance="9723.21"/>
 </vertex>
 <vertex id="28">
 <valid value="1"/>
@@ -404,7 +404,7 @@
 <label name="title" value="cg_8.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="59" distance="25005.3"/>
+<parent value="54" distance="24435.8"/>
 </vertex>
 <vertex id="29">
 <valid value="1"/>
@@ -418,7 +418,7 @@
 <label name="title" value="cg_9.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="66" distance="33128.8"/>
+<parent value="69" distance="48065.8"/>
 </vertex>
 <vertex id="30">
 <valid value="1"/>
@@ -432,7 +432,7 @@
 <label name="title" value="dg_1.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="48" distance="40889.5"/>
+<parent value="55" distance="34192.5"/>
 </vertex>
 <vertex id="31">
 <valid value="1"/>
@@ -446,7 +446,7 @@
 <label name="title" value="dg_2.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="47" distance="42219.2"/>
+<parent value="55" distance="41703.1"/>
 </vertex>
 <vertex id="32">
 <valid value="1"/>
@@ -460,7 +460,7 @@
 <label name="title" value="dg_3.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="45" distance="45529"/>
+<parent value="56" distance="55001.2"/>
 </vertex>
 <vertex id="33">
 <valid value="1"/>
@@ -474,7 +474,7 @@
 <label name="title" value="dg_4.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="46" distance="26863"/>
+<parent value="56" distance="32548.6"/>
 </vertex>
 <vertex id="34">
 <valid value="1"/>
@@ -488,7 +488,7 @@
 <label name="title" value="dg_5.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="45" distance="19020.5"/>
+<parent value="62" distance="44273.7"/>
 </vertex>
 <vertex id="35">
 <valid value="1"/>
@@ -502,7 +502,7 @@
 <label name="title" value="gg_1.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="63" distance="61811.7"/>
+<parent value="59" distance="53467.3"/>
 </vertex>
 <vertex id="36">
 <valid value="1"/>
@@ -516,7 +516,7 @@
 <label name="title" value="gg_2.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="44" distance="33799.8"/>
+<parent value="57" distance="79926.6"/>
 </vertex>
 <vertex id="37">
 <valid value="1"/>
@@ -530,7 +530,7 @@
 <label name="title" value="gg_3.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="60" distance="111711"/>
+<parent value="58" distance="109570"/>
 </vertex>
 <vertex id="38">
 <valid value="1"/>
@@ -544,7 +544,7 @@
 <label name="title" value="hg_1.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="58" distance="304.689"/>
+<parent value="59" distance="21865.5"/>
 </vertex>
 <vertex id="39">
 <valid value="1"/>
@@ -558,7 +558,7 @@
 <label name="title" value="hg_2.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="65" distance="31393.1"/>
+<parent value="70" distance="53328.3"/>
 </vertex>
 <vertex id="40">
 <valid value="1"/>
@@ -572,7 +572,7 @@
 <label name="title" value="hg_3.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="58" distance="100.082"/>
+<parent value="60" distance="18697.3"/>
 </vertex>
 <vertex id="41">
 <valid value="1"/>
@@ -586,7 +586,7 @@
 <label name="title" value="ig_1.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="61" distance="21956.6"/>
+<parent value="60" distance="22979.2"/>
 </vertex>
 <vertex id="42">
 <valid value="1"/>
@@ -600,7 +600,7 @@
 <label name="title" value="ig_2.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="56" distance="71181"/>
+<parent value="63" distance="88634.4"/>
 </vertex>
 <vertex id="43">
 <valid value="1"/>
@@ -614,7 +614,7 @@
 <label name="title" value="ig_3.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="71" distance="66372.2"/>
+<parent value="71" distance="90336.3"/>
 </vertex>
 <vertex id="44">
 <valid value="0"/>
@@ -628,9 +628,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="20" distance="101442"/>
-<son value="36" distance="33799.8"/>
-<parent value="49" distance="30750.4"/>
+<son value="0" distance="30779.9"/>
+<son value="1" distance="57371.7"/>
+<parent value="61" distance="-20626.6"/>
 </vertex>
 <vertex id="45">
 <valid value="0"/>
@@ -644,9 +644,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="32" distance="45529"/>
-<son value="34" distance="19020.5"/>
-<parent value="46" distance="8080.25"/>
+<son value="2" distance="35210.7"/>
+<son value="5" distance="37417.8"/>
+<parent value="64" distance="16382.6"/>
 </vertex>
 <vertex id="46">
 <valid value="0"/>
@@ -660,9 +660,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="45" distance="8080.25"/>
-<son value="33" distance="26863"/>
-<parent value="47" distance="10909.5"/>
+<son value="3" distance="10851.3"/>
+<son value="6" distance="38862.2"/>
+<parent value="65" distance="17148.7"/>
 </vertex>
 <vertex id="47">
 <valid value="0"/>
@@ -676,9 +676,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="31" distance="42219.2"/>
-<son value="46" distance="10909.5"/>
-<parent value="48" distance="12426.4"/>
+<son value="7" distance="18420.3"/>
+<son value="8" distance="9407.31"/>
+<parent value="67" distance="18570.4"/>
 </vertex>
 <vertex id="48">
 <valid value="0"/>
@@ -692,9 +692,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="30" distance="40889.5"/>
-<son value="47" distance="12426.4"/>
-<parent value="75" distance="132201"/>
+<son value="11" distance="30899.3"/>
+<son value="12" distance="11451.1"/>
+<parent value="73" distance="97759.8"/>
 </vertex>
 <vertex id="49">
 <valid value="0"/>
@@ -708,9 +708,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="44" distance="30750.4"/>
-<son value="25" distance="34495.1"/>
-<parent value="56" distance="36320.4"/>
+<son value="13" distance="53778.3"/>
+<son value="14" distance="88646.7"/>
+<parent value="74" distance="63048.8"/>
 </vertex>
 <vertex id="50">
 <valid value="0"/>
@@ -724,9 +724,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="11" distance="117.786"/>
-<son value="17" distance="361.147"/>
-<parent value="51" distance="31988.8"/>
+<son value="15" distance="18323.7"/>
+<son value="16" distance="9231.37"/>
+<parent value="75" distance="78530.2"/>
 </vertex>
 <vertex id="51">
 <valid value="0"/>
@@ -740,9 +740,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="50" distance="31988.8"/>
-<son value="12" distance="10258.9"/>
-<parent value="53" distance="11875.6"/>
+<son value="17" distance="82316.2"/>
+<son value="18" distance="76027.4"/>
+<parent value="76" distance="-226.916"/>
 </vertex>
 <vertex id="52">
 <valid value="0"/>
@@ -756,9 +756,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="15" distance="18379.9"/>
-<son value="16" distance="9175.17"/>
-<parent value="54" distance="18551.4"/>
+<son value="10" distance="39746.7"/>
+<son value="19" distance="89960.8"/>
+<parent value="72" distance="96867.7"/>
 </vertex>
 <vertex id="53">
 <valid value="0"/>
@@ -772,9 +772,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="51" distance="11875.6"/>
-<son value="19" distance="48422.3"/>
-<parent value="54" distance="14918.3"/>
+<son value="20" distance="184978"/>
+<son value="22" distance="28576.2"/>
+<parent value="63" distance="-4036.27"/>
 </vertex>
 <vertex id="54">
 <valid value="0"/>
@@ -788,9 +788,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="53" distance="14918.3"/>
-<son value="52" distance="18551.4"/>
-<parent value="57" distance="38510.1"/>
+<son value="27" distance="9723.21"/>
+<son value="28" distance="24435.8"/>
+<parent value="82" distance="99074.9"/>
 </vertex>
 <vertex id="55">
 <valid value="0"/>
@@ -804,9 +804,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="13" distance="18987.1"/>
-<son value="18" distance="43268.9"/>
-<parent value="57" distance="36055.4"/>
+<son value="30" distance="34192.5"/>
+<son value="31" distance="41703.1"/>
+<parent value="62" distance="5183.39"/>
 </vertex>
 <vertex id="56">
 <valid value="0"/>
@@ -820,9 +820,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="49" distance="36320.4"/>
-<son value="42" distance="71181"/>
-<parent value="60" distance="36321.9"/>
+<son value="32" distance="55001.2"/>
+<son value="33" distance="32548.6"/>
+<parent value="84" distance="175366"/>
 </vertex>
 <vertex id="57">
 <valid value="0"/>
@@ -836,9 +836,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="54" distance="38510.1"/>
-<son value="55" distance="36055.4"/>
-<parent value="70" distance="20211.5"/>
+<son value="25" distance="52311.9"/>
+<son value="36" distance="79926.6"/>
+<parent value="80" distance="91139.4"/>
 </vertex>
 <vertex id="58">
 <valid value="0"/>
@@ -852,9 +852,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="38" distance="304.689"/>
-<son value="40" distance="100.082"/>
-<parent value="61" distance="19501.2"/>
+<son value="23" distance="28159.7"/>
+<son value="37" distance="109570"/>
+<parent value="79" distance="69621.2"/>
 </vertex>
 <vertex id="59">
 <valid value="0"/>
@@ -868,9 +868,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="27" distance="9153.66"/>
-<son value="28" distance="25005.3"/>
-<parent value="71" distance="87979.2"/>
+<son value="35" distance="53467.3"/>
+<son value="38" distance="21865.5"/>
+<parent value="85" distance="-5275.76"/>
 </vertex>
 <vertex id="60">
 <valid value="0"/>
@@ -884,9 +884,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="56" distance="36321.9"/>
-<son value="37" distance="111711"/>
-<parent value="62" distance="6191.14"/>
+<son value="40" distance="18697.3"/>
+<son value="41" distance="22979.2"/>
+<parent value="85" distance="1828.21"/>
 </vertex>
 <vertex id="61">
 <valid value="0"/>
@@ -900,9 +900,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="58" distance="19501.2"/>
-<son value="41" distance="21956.6"/>
-<parent value="63" distance="6421.52"/>
+<son value="44" distance="-20626.6"/>
+<son value="9" distance="32948.4"/>
+<parent value="64" distance="-4391.19"/>
 </vertex>
 <vertex id="62">
 <valid value="0"/>
@@ -916,9 +916,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="60" distance="6191.14"/>
-<son value="22" distance="43719.8"/>
-<parent value="64" distance="25945.1"/>
+<son value="55" distance="5183.39"/>
+<son value="34" distance="44273.7"/>
+<parent value="83" distance="214586"/>
 </vertex>
 <vertex id="63">
 <valid value="0"/>
@@ -932,9 +932,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="35" distance="61811.7"/>
-<son value="61" distance="6421.52"/>
-<parent value="64" distance="21626.6"/>
+<son value="53" distance="-4036.27"/>
+<son value="42" distance="88634.4"/>
+<parent value="70" distance="63613.7"/>
 </vertex>
 <vertex id="64">
 <valid value="0"/>
@@ -948,9 +948,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="62" distance="25945.1"/>
-<son value="63" distance="21626.6"/>
-<parent value="65" distance="9969.2"/>
+<son value="61" distance="-4391.19"/>
+<son value="45" distance="16382.6"/>
+<parent value="65" distance="-4266.55"/>
 </vertex>
 <vertex id="65">
 <valid value="0"/>
@@ -964,9 +964,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="64" distance="9969.2"/>
-<son value="39" distance="31393.1"/>
-<parent value="66" distance="17017.9"/>
+<son value="64" distance="-4266.55"/>
+<son value="46" distance="17148.7"/>
+<parent value="66" distance="50421.3"/>
 </vertex>
 <vertex id="66">
 <valid value="0"/>
@@ -980,9 +980,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="65" distance="17017.9"/>
-<son value="29" distance="33128.8"/>
-<parent value="67" distance="4709.02"/>
+<son value="65" distance="50421.3"/>
+<son value="4" distance="31783.1"/>
+<parent value="67" distance="-26280.5"/>
 </vertex>
 <vertex id="67">
 <valid value="0"/>
@@ -996,9 +996,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="66" distance="4709.02"/>
-<son value="23" distance="71293.9"/>
-<parent value="68" distance="29711.6"/>
+<son value="66" distance="-26280.5"/>
+<son value="47" distance="18570.4"/>
+<parent value="71" distance="86074.8"/>
 </vertex>
 <vertex id="68">
 <valid value="0"/>
@@ -1012,9 +1012,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="67" distance="29711.6"/>
-<son value="24" distance="24923.5"/>
-<parent value="69" distance="13005.4"/>
+<son value="21" distance="34010.5"/>
+<son value="24" distance="42022.1"/>
+<parent value="78" distance="42861.7"/>
 </vertex>
 <vertex id="69">
 <valid value="0"/>
@@ -1028,9 +1028,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="68" distance="13005.4"/>
-<son value="26" distance="21637.3"/>
-<parent value="72" distance="19034.1"/>
+<son value="26" distance="37285.5"/>
+<son value="29" distance="48065.8"/>
+<parent value="81" distance="13842.7"/>
 </vertex>
 <vertex id="70">
 <valid value="0"/>
@@ -1044,9 +1044,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="10" distance="80445.1"/>
-<son value="57" distance="20211.5"/>
-<parent value="74" distance="24769.9"/>
+<son value="63" distance="63613.7"/>
+<son value="39" distance="53328.3"/>
+<parent value="77" distance="42495.3"/>
 </vertex>
 <vertex id="71">
 <valid value="0"/>
@@ -1060,9 +1060,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="59" distance="87979.2"/>
-<son value="43" distance="66372.2"/>
-<parent value="72" distance="9586.08"/>
+<son value="67" distance="86074.8"/>
+<son value="43" distance="90336.3"/>
+<parent value="72" distance="24506.6"/>
 </vertex>
 <vertex id="72">
 <valid value="0"/>
@@ -1076,9 +1076,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="69" distance="19034.1"/>
-<son value="71" distance="9586.08"/>
-<parent value="73" distance="1926.8"/>
+<son value="71" distance="24506.6"/>
+<son value="52" distance="96867.7"/>
+<parent value="73" distance="-54473.7"/>
 </vertex>
 <vertex id="73">
 <valid value="0"/>
@@ -1092,9 +1092,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="72" distance="1926.8"/>
-<son value="21" distance="28350.7"/>
-<parent value="76" distance="68497.5"/>
+<son value="72" distance="-54473.7"/>
+<son value="48" distance="97759.8"/>
+<parent value="74" distance="1606.44"/>
 </vertex>
 <vertex id="74">
 <valid value="0"/>
@@ -1108,9 +1108,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="70" distance="24769.9"/>
-<son value="14" distance="138674"/>
-<parent value="75" distance="29090.5"/>
+<son value="73" distance="1606.44"/>
+<son value="49" distance="63048.8"/>
+<parent value="75" distance="-37866.9"/>
 </vertex>
 <vertex id="75">
 <valid value="0"/>
@@ -1124,9 +1124,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="74" distance="29090.5"/>
-<son value="48" distance="132201"/>
-<parent value="84" distance="60227.2"/>
+<son value="74" distance="-37866.9"/>
+<son value="50" distance="78530.2"/>
+<parent value="76" distance="-30736"/>
 </vertex>
 <vertex id="76">
 <valid value="0"/>
@@ -1140,9 +1140,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="4" distance="13398.9"/>
-<son value="73" distance="68497.5"/>
-<parent value="77" distance="16813.6"/>
+<son value="75" distance="-30736"/>
+<son value="51" distance="-226.916"/>
+<parent value="77" distance="192169"/>
 </vertex>
 <vertex id="77">
 <valid value="0"/>
@@ -1156,9 +1156,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="0" distance="8936.42"/>
-<son value="76" distance="16813.6"/>
-<parent value="78" distance="14339.2"/>
+<son value="76" distance="192169"/>
+<son value="70" distance="42495.3"/>
+<parent value="78" distance="-37540.6"/>
 </vertex>
 <vertex id="78">
 <valid value="0"/>
@@ -1172,9 +1172,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="77" distance="14339.2"/>
-<son value="8" distance="8500.21"/>
-<parent value="79" distance="9989.35"/>
+<son value="77" distance="-37540.6"/>
+<son value="68" distance="42861.7"/>
+<parent value="79" distance="-10972"/>
 </vertex>
 <vertex id="79">
 <valid value="0"/>
@@ -1188,9 +1188,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="78" distance="9989.35"/>
-<son value="7" distance="9910.96"/>
-<parent value="80" distance="12129.4"/>
+<son value="78" distance="-10972"/>
+<son value="58" distance="69621.2"/>
+<parent value="80" distance="-19342.8"/>
 </vertex>
 <vertex id="80">
 <valid value="0"/>
@@ -1204,9 +1204,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="79" distance="12129.4"/>
-<son value="9" distance="10959"/>
-<parent value="85" distance="18932.3"/>
+<son value="79" distance="-19342.8"/>
+<son value="57" distance="91139.4"/>
+<parent value="81" distance="7692.75"/>
 </vertex>
 <vertex id="81">
 <valid value="0"/>
@@ -1220,9 +1220,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="1" distance="13342.5"/>
-<son value="2" distance="14546.6"/>
-<parent value="85" distance="15989.6"/>
+<son value="80" distance="7692.75"/>
+<son value="69" distance="13842.7"/>
+<parent value="82" distance="-9999.9"/>
 </vertex>
 <vertex id="82">
 <valid value="0"/>
@@ -1236,9 +1236,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="5" distance="37126.8"/>
-<son value="6" distance="26660.9"/>
-<parent value="83" distance="7112.12"/>
+<son value="81" distance="-9999.9"/>
+<son value="54" distance="99074.9"/>
+<parent value="83" distance="112509"/>
 </vertex>
 <vertex id="83">
 <valid value="0"/>
@@ -1252,9 +1252,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="3" distance="25419.7"/>
-<son value="82" distance="7112.12"/>
-<parent value="84" distance="4793.02"/>
+<son value="82" distance="112509"/>
+<son value="62" distance="214586"/>
+<parent value="84" distance="-171169"/>
 </vertex>
 <vertex id="84">
 <valid value="0"/>
@@ -1268,9 +1268,9 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="83" distance="4793.02"/>
-<son value="75" distance="60227.2"/>
-<parent value="85" distance="4414.81"/>
+<son value="83" distance="-171169"/>
+<son value="56" distance="175366"/>
+<parent value="85" distance="239900"/>
 </vertex>
 <vertex id="85">
 <valid value="0"/>
@@ -1284,8 +1284,8 @@
 <label name="title" value=""/>
 <label name="file name" value=""/>
 </labels>
-<son value="80" distance="18932.3"/>
-<son value="81" distance="15989.6"/>
-<parent value="84" distance="4414.81"/>
+<son value="59" distance="-5275.76"/>
+<son value="60" distance="1828.21"/>
+<parent value="84" distance="239900"/>
 </vertex>
 </graph>
