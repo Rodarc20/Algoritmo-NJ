@@ -28,13 +28,13 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
     for(int it = 0; it < NumeroNodosReales-2; it++){//con -2 llego los hago el algoritmo hasta el final
         //bulces
         //cout << "iteracion: " << it << endl;
-        for(int i = 0; i < DimensionMatrizI; i++){
-            Divergencias[i] = 0;
-            for(int j = 0; j < DimensionMatrizI; j++){
-                if(i != j){
-                    Divergencias[i] += MatrizDistancias[i][j];
-                }
-            }
+        int ElementosPorThread = (DimensionMatrizI-1)/NumeroThreads + 1;
+        vector<thread> threads (NumeroThreads);
+        for(int i = 0; i < threads.size(); i++){
+            threads[i] = thread(&NJ::CalculoDivergenciaThread, this, i*ElementosPorThread, (i+1)*ElementosPorThread);
+        }
+        for(int i = 0; i < threads.size(); i++){
+            threads[i].join();
         }
         //ImprimirDivergencias(Divergencias, DimensionMatrizI);
 
@@ -258,7 +258,19 @@ void NJ::DatosIniciales(string * Datos, int n){
     //lo que nates hacian cuando incrementaba la variable NUmeroNodos en cada iteracion
 }
 
+void NJ::CalculoDivergenciaThread(int di, int dj){
+    for(int i = di; i < dj && i < DimensionMatrizI; i++){
+        Divergencias[i] = 0;
+        for(int j = 0; j < DimensionMatrizI; j++){
+            if(i != j){
+                Divergencias[i] += MatrizDistancias[i][j];
+            }
+        }
+    }
+}
+
 NJ::NJ(){
+    NumeroThreads = 8;
 
 }
 

@@ -5,6 +5,9 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<limits>
+#include<thread>
+#include<mutex>
+#include<vector>
 #include"nodo.h"
 
 using namespace std;
@@ -15,6 +18,7 @@ class NJ {
         //esos son los nodos del arbol
         //no necesito dos arreglos, todo esta almancenad en Nodos,
         //puedo ier a los nodos virtuales usando los enteros, del numero de nodos reales y virtuales
+        int NumeroThreads;
         int NumeroNodos;
         int NumeroNodosReales;
         int NumeroNodosVirtuales;
@@ -38,6 +42,7 @@ class NJ {
         void ImprimirArreglo(int * Arreglo, int n);
         void ImprimirDivergencias(float * Divergencia, int n);
         void DatosIniciales(string * Datos, int n);//el verctor de datos// los nombres de los documentos
+        void CalculoDivergenciaThread(int di, int dj);//cuidado con el limite superior
         NJ();
         ~NJ();
 };
