@@ -12,6 +12,13 @@
 
 using namespace std;
 
+struct DatosMij{
+    int i;
+    int j;
+    float Mij;
+    int prioridad;
+};
+
 class NJ {
     public:
         Nodo ** Nodos;//doble puntero seria mejor?
@@ -43,6 +50,8 @@ class NJ {
         void ImprimirDivergencias(float * Divergencia, int n);
         void DatosIniciales(string * Datos, int n);//el verctor de datos// los nombres de los documentos
         void CalculoDivergenciaThread(int di, int dj);//cuidado con el limite superior
+        void CalculoMijThread(int ini, int fin, int MC, DatosMij * minimo);
+        void NuevaMatrizThread(int i, int j);
         NJ();
         ~NJ();
 };

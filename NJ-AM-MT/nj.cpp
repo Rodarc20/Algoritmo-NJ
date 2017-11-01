@@ -27,7 +27,7 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
     //creacion de matrices
     for(int it = 0; it < NumeroNodosReales-2; it++){//con -2 llego los hago el algoritmo hasta el final
         //bulces
-        //cout << "iteracion: " << it << endl;
+        cout << "iteracion: " << it << endl;
         int ElementosPorThread = (DimensionMatrizI-1)/NumeroThreads + 1;
         vector<thread> threads (NumeroThreads);
         for(int i = 0; i < threads.size(); i++){
@@ -37,29 +37,49 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
             threads[i].join();
         }
         //ImprimirDivergencias(Divergencias, DimensionMatrizI);
+        cout << "DimensionMatrizI: " << DimensionMatrizI << endl;
+        int inicialMD = (DimensionMatrizI-1)/2 + 1;
+        int MC = DimensionMatrizI-1 + !((DimensionMatrizI-1) & 1);
+        int Mf = DimensionMatrizI - inicialMD;
+        int TamValores = (DimensionMatrizI*DimensionMatrizI - DimensionMatrizI)/2;//(n^2 - n)/2 = 15 ejemplo
+        cout << "TamValores: " << TamValores << endl;
+        cout << "inicialMD: " << inicialMD << endl;
+        ElementosPorThread = (TamValores-1)/NumeroThreads + 1;
+        cout << "Elementos por thread: " << ElementosPorThread << endl; 
+        //vector<thread> threads (NumeroThreads);
+        vector<DatosMij> minimos (NumeroThreads);
+        for(int i = 0; i < threads.size(); i++){
+            threads[i] = thread(&NJ::CalculoMijThread, this, i*ElementosPorThread, (i+1)*ElementosPorThread, MC, &minimos[i]);
+        }
+        for(int i = 0; i < threads.size(); i++){
+            threads[i].join();
+        }
 
-        int iMin = -1, jMin = -1;
+        int veciMin = -1;
+        int iMin = DimensionMatrizI, jMin = DimensionMatrizI;
         int prioridadMin = -1;
         float MMin = numeric_limits<float>::max();//valor maximo
         //copiada quiza no sea util
-        for(int i = 1; i < DimensionMatrizI; i++){//la forma de recorrer hace que i > j siempre primera posicion (1,0)
-            for(int j = 0; j < i; j++){//para recorrer la matriz tringula inferior
-                //if(i != j){//ya no es necesario este if
-                    int prioridad = (int) Nodos[ArregloId[i]]->Valido + (int) Nodos[ArregloId[j]]->Valido;
-                    //MatrizDistanciasModificadas[i][j] = Mij(i,j);//no es necasrio almacenar
-                    //if(MatrizDistanciasModificadas[i][j] <= MMin && prioridadMin < prioridad){//en lugar de matriz deberia se solo una varible temporal
-                    float ActualMij = Mij(i,j);
-                    if(ActualMij <= MMin && prioridadMin < prioridad){//en lugar de matriz deberia se solo una varible temporal
-                    //if(MatrizDistanciasModificadas[i][j] < MMin){//en lugar de matriz deberia se solo una varible temporal
-                        iMin = i;
-                        jMin = j;
-                        MMin = ActualMij;
-                        //MMin = MatrizDistanciasModificadas[i][j];
-                        prioridadMin = prioridad;
-                    }
-                //}
+        cout << "Minimos: " << endl;
+        for(int i = 0; i < minimos.size(); i++){//la forma de recorrer hace que i > j siempre primera posicion (1,0)
+            int prioridad = (int) Nodos[ArregloId[minimos[i].i]]->Valido + (int) Nodos[ArregloId[minimos[i].j]]->Valido;
+            //cout << minimos[i].i << " " << minimos[i].j << endl;
+            //cout << minimos[i].Mij << endl;
+            //en lugar de comparar con el iminy jmin podria usar la combinacion con el idx sobre la matrizde dsitancias, estos nunca se repetiran
+            //if(minimos[i].Mij <= MMin && prioridadMin <= minimos[i].prioridad && minimos[i].i <= iMin && minimos[i].j <= jMin){//en lugar de matriz deberia se solo una varible temporal
+            //if(minimos[i].Mij < MMin){
+            //}
+            if(minimos[i].Mij < MMin || (minimos[i].Mij == MMin && prioridadMin < minimos[i].prioridad)){//en lugar de matriz deberia se solo una varible temporal
+                //arreglar lo de loss minimos
+                veciMin = i;
+                MMin = minimos[i].Mij;
+                prioridadMin = minimos[i].prioridad;
+                iMin = minimos[i].i;
+                jMin = minimos[i].j;
             }
         }
+        iMin = minimos[veciMin].i;
+        jMin = minimos[veciMin].j;
         if(it == NumeroNodosReales-3){//este caso deberia estar mejo estructurado
             //cout << "caso especial: " << it << endl;
             float DMin = numeric_limits<float>::max();//valor maximo
@@ -89,10 +109,10 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
         //cout << "eleccion del sij " << ArregloId[iMin] << " " << ArregloId[jMin] << endl;//no esta mostrando el nombre, esta mostrando los i j de la matriz
         //ya tengo los nodos mas similares
         //crear un nuevo nodo virtual, reemplazar
-        //cout << "eleccion del sij " << iMin << " " << jMin << endl;//no esta mostrando el nombre, esta mostrando los i j de la matriz
+        cout << "eleccion del sij " << iMin << " " << jMin << endl;//no esta mostrando el nombre, esta mostrando los i j de la matriz
         CrearNodoVirtual(iMin, jMin);
         //CrearNodoVirtual(ArregloId[iMin], ArregloId[jMin]);
-        //cout << "creado nodo virtual" << endl;
+        cout << "creado nodo virtual" << endl;
         //substituimos el ide del nodo virrual en el i
         
         //ArregloId[iMin] = NumeroNodos-1;//como  j tiene que ser mayo que i e cambiado
@@ -269,8 +289,48 @@ void NJ::CalculoDivergenciaThread(int di, int dj){
     }
 }
 
+void NJ::CalculoMijThread(int ini, int fin, int MC, DatosMij * minimo){
+    //esto podria ser asiganod sobre minimo, y trabajar sobre el desde el inicio
+    int iMin = DimensionMatrizI, jMin = DimensionMatrizI;
+    int prioridadMin = -1; 
+    float MMin = numeric_limits<float>::max();//valor maximo
+    //debo iterar desde mi hasta mj y descomponer en los respectivos i y j
+    int inicialMD = (DimensionMatrizI-1)/2 + 1;
+    int TamValores = (DimensionMatrizI*DimensionMatrizI - DimensionMatrizI)/2;//(n^2 - n)/2
+    for(int i = ini; i < fin && i < TamValores; i++){
+        int iM = i / MC;//revisar que estossean los correctos
+        int jM = i % MC;
+        int imd;
+        if(jM/(inicialMD + iM)){
+            imd = MC - (inicialMD + iM);
+        }
+        else{
+            imd = inicialMD + iM;
+        }
+        int jmd = jM % (inicialMD + iM);
+        int prioridad = (int) Nodos[ArregloId[imd]]->Valido + (int) Nodos[ArregloId[jmd]]->Valido;
+        //MatrizDistanciasModificadas[i][j] = Mij(i,j);//no es necasrio almacenar
+        //if(MatrizDistanciasModificadas[i][j] <= MMin && prioridadMin < prioridad){//en lugar de matriz deberia se solo una varible temporal
+        float ActualMij = Mij(imd,jmd);
+        //cout << ActualMij << endl;
+        //if(ActualMij <= MMin && prioridadMin <= prioridad && imd <= iMin && jmd <= jMin){//como poner esto apropiadamentes (3,0) (3,1) aunq eu 3,1 tenga menor Mij, no entrara al if, porque 1 no es menor que 0
+        //if(ActualMij <= MMin && prioridadMin < prioridad){
+        if(ActualMij < MMin || (ActualMij == MMin && prioridadMin < prioridad)){
+            iMin = imd;
+            jMin = jmd;
+            MMin = ActualMij;
+            prioridadMin = prioridad;
+        }
+    }
+    //esto podria 
+    minimo->i = iMin;
+    minimo->j = jMin;
+    minimo->Mij = MMin;
+    minimo->prioridad = prioridadMin;
+}
+
 NJ::NJ(){
-    NumeroThreads = 8;
+    NumeroThreads = 4;
 
 }
 
