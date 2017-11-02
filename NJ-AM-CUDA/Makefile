@@ -1,8 +1,8 @@
 nj.out: main.o nj.o nodo.o
-	g++ -o nj.out -std=c++11 main.o nj.o nodo.o
-main.o: main.cpp nj.h nodo.h
-	g++ -std=c++11 -c main.cpp
-nj.o: nj.cpp nj.h nodo.h
-	g++ -std=c++11 -c nj.cpp
+	nvcc -o nj.out main.o nj.o nodo.o
+main.o: main.cu nj.h nodo.h
+	nvcc -c main.cu
+nj.o: nj.cu nj.h nodo.h
+	nvcc -c nj.cu
 nodo.o: nodo.cpp nodo.h
-	g++ -std=c++11 -c nodo.cpp
+	nvcc -c nodo.cpp
