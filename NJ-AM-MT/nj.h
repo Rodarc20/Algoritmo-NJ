@@ -52,6 +52,8 @@ class NJ {
         void CalculoDivergenciaThread(int di, int dj);//cuidado con el limite superior
         void CalculoMijThread(int ini, int fin, int MC, DatosMij * minimo);
         void NuevaMatrizThread(int i, int j);
+        void MoviendoJThread(int ini, int fin, int i);
+        void ActualizandoDistanciasThread(int ini, int fin, int j, float Distanciaij);
         NJ();
         ~NJ();
 };

@@ -27,7 +27,7 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
     //creacion de matrices
     for(int it = 0; it < NumeroNodosReales-2; it++){//con -2 llego los hago el algoritmo hasta el final
         //bulces
-        cout << "iteracion: " << it << endl;
+        //cout << "iteracion: " << it << endl;
         int ElementosPorThread = (DimensionMatrizI-1)/NumeroThreads + 1;
         vector<thread> threads (NumeroThreads);
         for(int i = 0; i < threads.size(); i++){
@@ -37,15 +37,15 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
             threads[i].join();
         }
         //ImprimirDivergencias(Divergencias, DimensionMatrizI);
-        cout << "DimensionMatrizI: " << DimensionMatrizI << endl;
+        //cout << "DimensionMatrizI: " << DimensionMatrizI << endl;
         int inicialMD = (DimensionMatrizI-1)/2 + 1;
         int MC = DimensionMatrizI-1 + !((DimensionMatrizI-1) & 1);
         int Mf = DimensionMatrizI - inicialMD;
         int TamValores = (DimensionMatrizI*DimensionMatrizI - DimensionMatrizI)/2;//(n^2 - n)/2 = 15 ejemplo
-        cout << "TamValores: " << TamValores << endl;
-        cout << "inicialMD: " << inicialMD << endl;
+        //cout << "TamValores: " << TamValores << endl;
+        //cout << "inicialMD: " << inicialMD << endl;
         ElementosPorThread = (TamValores-1)/NumeroThreads + 1;
-        cout << "Elementos por thread: " << ElementosPorThread << endl; 
+        //cout << "Elementos por thread: " << ElementosPorThread << endl; 
         //vector<thread> threads (NumeroThreads);
         vector<DatosMij> minimos (NumeroThreads);
         for(int i = 0; i < threads.size(); i++){
@@ -60,7 +60,7 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
         int prioridadMin = -1;
         float MMin = numeric_limits<float>::max();//valor maximo
         //copiada quiza no sea util
-        cout << "Minimos: " << endl;
+        //cout << "Minimos: " << endl;
         for(int i = 0; i < minimos.size(); i++){//la forma de recorrer hace que i > j siempre primera posicion (1,0)
             int prioridad = (int) Nodos[ArregloId[minimos[i].i]]->Valido + (int) Nodos[ArregloId[minimos[i].j]]->Valido;
             //cout << minimos[i].i << " " << minimos[i].j << endl;
@@ -109,10 +109,10 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
         //cout << "eleccion del sij " << ArregloId[iMin] << " " << ArregloId[jMin] << endl;//no esta mostrando el nombre, esta mostrando los i j de la matriz
         //ya tengo los nodos mas similares
         //crear un nuevo nodo virtual, reemplazar
-        cout << "eleccion del sij " << iMin << " " << jMin << endl;//no esta mostrando el nombre, esta mostrando los i j de la matriz
+        //cout << "eleccion del sij " << iMin << " " << jMin << endl;//no esta mostrando el nombre, esta mostrando los i j de la matriz
         CrearNodoVirtual(iMin, jMin);
         //CrearNodoVirtual(ArregloId[iMin], ArregloId[jMin]);
-        cout << "creado nodo virtual" << endl;
+        //cout << "creado nodo virtual" << endl;
         //substituimos el ide del nodo virrual en el i
         
         //ArregloId[iMin] = NumeroNodos-1;//como  j tiene que ser mayo que i e cambiado
@@ -152,6 +152,8 @@ void NJ::NuevaMatrizDistancias(int i, int j){//i y j son los nodos que fueron de
     //antes de ahcer el corrimiento seria buno calcular las deistancias para el nuevo, y solo hacer el cambio con i
     //como el j es el mas a la izquierda, ese lo dejo, y muevo el i hacia el final de la matriz
     //cout << "Nueva matriz de distacnias " << i << ", " << j << endl;//se escojo e primero
+    //ImprimirArreglo(ArregloId, DimensionMatrizI);
+    //ImprimirMatriz(MatrizDistancias, DimensionMatrizI);
     float Distanciaij = MatrizDistancias[i][j];//este se puede dejar asi, ya que uso la matriz inferior
     //estos i y j, estan sobre el ArrgloId
     for(int k = i+1; k < DimensionMatrizI; k++){
@@ -163,30 +165,30 @@ void NJ::NuevaMatrizDistancias(int i, int j){//i y j son los nodos que fueron de
         ArregloId[k] = tempId;
         
     }
-    for(int k = 0; k < DimensionMatrizI; k++){
-        for(int h = i+1; h < DimensionMatrizI; h++){
-            float tempD = MatrizDistancias[k][h-1];
-            MatrizDistancias[k][h-1] = MatrizDistancias[k][h];
-            MatrizDistancias[k][h] = tempD;
-        }
+    int ElementosPorThread = (DimensionMatrizI-1)/NumeroThreads + 1;
+    vector<thread> threads (NumeroThreads);
+    for(int k = 0; k < threads.size(); k++){
+        threads[k] = thread(&NJ::MoviendoJThread, this, k*ElementosPorThread, (k+1)*ElementosPorThread, i);
+    }
+    for(int k = 0; k < threads.size(); k++){
+        threads[k].join();
     }
     //cout << "i al final" << endl;
     //ImprimirArreglo(ArregloId, DimensionMatrizI);
     //ImprimirMatriz(MatrizDistancias, DimensionMatrizI);
     DimensionMatrizI--;
     //j ahora esta en la posicion DimensionMatriz
-    for(int k = 0; k < DimensionMatrizI; k++){
-        //en este punto ya debe estar el nodo virtual nuevo en la posicion i, ya que no se movera alli, quiza yua este antes de entrar a esta funcion
-        if(k != j){
-            //cout << k << ":: " << MatrizDistancias[i][k] << "+" << MatrizDistancias[DimensionMatrizI][k] << "-" <<  Distanciaij << endl;
-            MatrizDistancias[j][k] = (MatrizDistancias[j][k] + MatrizDistancias[DimensionMatrizI][k] - Distanciaij)/2;
-            MatrizDistancias[k][j] = MatrizDistancias[j][k];//quiza no sea necesario
-        }
-        else{
-            MatrizDistancias[j][k] = 0;
-            MatrizDistancias[k][j] = 0;
-        }
+    //ImprimirArreglo(ArregloId, DimensionMatrizI);
+    //ImprimirMatriz(MatrizDistancias, DimensionMatrizI);
+    //cout << "inicio paralelo" << endl;
+    for(int k = 0; k < threads.size(); k++){
+        threads[k] = thread(&NJ::ActualizandoDistanciasThread, this, k*ElementosPorThread, (k+1)*ElementosPorThread, j, Distanciaij);
     }
+    for(int k = 0; k < threads.size(); k++){
+        threads[k].join();
+    }
+    //ImprimirArreglo(ArregloId, DimensionMatrizI);
+    //ImprimirMatriz(MatrizDistancias, DimensionMatrizI);
     //cout << "fin creacio nnueva matriz" << endl;
     //en que momento ubico al nuevo nodo viertual cundo lo creo?
     //
@@ -329,8 +331,33 @@ void NJ::CalculoMijThread(int ini, int fin, int MC, DatosMij * minimo){
     minimo->prioridad = prioridadMin;
 }
 
+void NJ::MoviendoJThread(int ini, int fin, int i){
+    for(int k = ini; k < fin && k < DimensionMatrizI; k++){
+        for(int h = i+1; h < DimensionMatrizI; h++){
+            float tempD = MatrizDistancias[k][h-1];
+            MatrizDistancias[k][h-1] = MatrizDistancias[k][h];
+            MatrizDistancias[k][h] = tempD;
+        }
+    }
+}
+
+void NJ::ActualizandoDistanciasThread(int ini, int fin, int j, float Distanciaij){
+    //cout << ini << " - " << fin << endl;
+    for(int k = ini; k < fin && k < DimensionMatrizI; k++){
+        //en este punto ya debe estar el nodo virtual nuevo en la posicion i, ya que no se movera alli, quiza yua este antes de entrar a esta funcion
+        if(k != j){
+            MatrizDistancias[j][k] = (MatrizDistancias[j][k] + MatrizDistancias[DimensionMatrizI][k] - Distanciaij)/2;
+            MatrizDistancias[k][j] = MatrizDistancias[j][k];//quiza no sea necesario
+        }
+        else{
+            MatrizDistancias[j][k] = 0;
+            MatrizDistancias[k][j] = 0;
+        }
+    }
+}
+
 NJ::NJ(){
-    NumeroThreads = 4;
+    NumeroThreads = 8;
 
 }
 
