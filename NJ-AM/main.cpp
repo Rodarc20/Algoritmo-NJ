@@ -2,6 +2,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string>
+#include<ctime>
 #include"nj.h"
 #include"nodo.h"
 
@@ -86,6 +87,7 @@ void LeerDatosPex(float ** & m, string * & d, int & n){//lee matrices cuadrasdas
 }
 
 int main(){
+    unsigned t0,t1;
     int n;
     float ** m;
     string * d;
@@ -105,9 +107,13 @@ int main(){
     NJ nj;
     Nodo ** result;
     nj.DatosIniciales(d, n);
+    t0 = clock();
     int tam = nj.GenerarArbol(m, n, result);//en toroia no encesitorecibir n ya que ya lo recibo en datos iniciales
+    t1 = clock();
     //ImprimirNodos(result, tam);
     ImprimirNodosPex(result, tam);
+    double time = (double(t1-t0)/CLOCKS_PER_SEC);
+    printf("Finalizado: %f\n", time);
     for(int i = 0; i < n; i++){
         delete [] m[i];
     }

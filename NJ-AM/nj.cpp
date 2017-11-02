@@ -49,7 +49,8 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
                     //MatrizDistanciasModificadas[i][j] = Mij(i,j);//no es necasrio almacenar
                     //if(MatrizDistanciasModificadas[i][j] <= MMin && prioridadMin < prioridad){//en lugar de matriz deberia se solo una varible temporal
                     float ActualMij = Mij(i,j);
-                    if(ActualMij <= MMin && prioridadMin < prioridad){//en lugar de matriz deberia se solo una varible temporal
+                    //if(ActualMij <= MMin && prioridadMin < prioridad){//en lugar de matriz deberia se solo una varible temporal
+                    if(ActualMij < MMin || (ActualMij == MMin && prioridadMin < prioridad)){
                     //if(MatrizDistanciasModificadas[i][j] < MMin){//en lugar de matriz deberia se solo una varible temporal
                         iMin = i;
                         jMin = j;
