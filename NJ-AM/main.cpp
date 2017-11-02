@@ -63,6 +63,20 @@ void LeerDatos(float ** & m, string * & d, int & n){//lee matrices cuadrasdas co
     }
 }
 
+void LeerDatosSinNombre(float ** & m, string * & d, int & n){//lee matrices cuadrasdas con  todos su valores, primero el numero de datos, luego los nombres de los datos y luego la matriz
+    cin >> n;
+    m = new float * [n];
+    d = new string [n];
+    for(int i = 0; i < n; i++){
+        d[i] = i;
+        m[i] = new float [n];
+    }
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < n; j++){
+            cin >> m[i][j];
+        }
+    }
+}
 void LeerDatosPex(float ** & m, string * & d, int & n){//lee matrices cuadrasdas con  todos su valores, primero el numero de datos, luego los nombres de los datos, luego la clase de los datos para el cdata y luego la matriz
     
     cin >> n;
@@ -103,7 +117,8 @@ int main(){
             cin >> m[i][j];
         }
     }*/
-    LeerDatosPex(m, d, n);
+    //LeerDatosPex(m, d, n);
+    LeerDatosSinNombre(m, d, n);
     NJ nj;
     Nodo ** result;
     nj.DatosIniciales(d, n);
