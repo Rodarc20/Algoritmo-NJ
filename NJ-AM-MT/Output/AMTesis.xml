@@ -5,6 +5,7 @@
 <x-coordinate value="0"/>
 <y-coordinate value="0"/>
 <url value=""/>
+<order value="0"/>
 <scalars>
 <scalar name="cdata" value="0"/>
 </scalars>
@@ -19,6 +20,7 @@
 <x-coordinate value="6"/>
 <y-coordinate value="6"/>
 <url value=""/>
+<order value="1"/>
 <scalars>
 <scalar name="cdata" value="0"/>
 </scalars>
@@ -33,6 +35,7 @@
 <x-coordinate value="12"/>
 <y-coordinate value="12"/>
 <url value=""/>
+<order value="5"/>
 <scalars>
 <scalar name="cdata" value="0"/>
 </scalars>
@@ -47,6 +50,7 @@
 <x-coordinate value="18"/>
 <y-coordinate value="18"/>
 <url value=""/>
+<order value="2"/>
 <scalars>
 <scalar name="cdata" value="0"/>
 </scalars>
@@ -61,6 +65,7 @@
 <x-coordinate value="24"/>
 <y-coordinate value="24"/>
 <url value=""/>
+<order value="3"/>
 <scalars>
 <scalar name="cdata" value="0"/>
 </scalars>
@@ -75,6 +80,7 @@
 <x-coordinate value="30"/>
 <y-coordinate value="30"/>
 <url value=""/>
+<order value="-1"/>
 <scalars>
 <scalar name="cdata" value="0"/>
 </scalars>
@@ -89,6 +95,7 @@
 <x-coordinate value="36"/>
 <y-coordinate value="36"/>
 <url value=""/>
+<order value="4"/>
 <scalars>
 <scalar name="cdata" value="0"/>
 </scalars>
@@ -105,6 +112,7 @@
 <x-coordinate value="42"/>
 <y-coordinate value="42"/>
 <url value=""/>
+<order value="7"/>
 <scalars>
 <scalar name="cdata" value="0"/>
 </scalars>
@@ -121,6 +129,7 @@
 <x-coordinate value="48"/>
 <y-coordinate value="48"/>
 <url value=""/>
+<order value="6"/>
 <scalars>
 <scalar name="cdata" value="0"/>
 </scalars>
@@ -137,6 +146,7 @@
 <x-coordinate value="54"/>
 <y-coordinate value="54"/>
 <url value=""/>
+<order value="0"/>
 <scalars>
 <scalar name="cdata" value="0"/>
 </scalars>
@@ -149,3 +159,4 @@
 <parent value="5" distance="5"/>
 </vertex>
 </graph>
+Finalizado: 0.004199

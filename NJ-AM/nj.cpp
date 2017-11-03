@@ -50,7 +50,8 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
                     //if(MatrizDistanciasModificadas[i][j] <= MMin && prioridadMin < prioridad){//en lugar de matriz deberia se solo una varible temporal
                     float ActualMij = Mij(i,j);
                     //if(ActualMij <= MMin && prioridadMin < prioridad){//en lugar de matriz deberia se solo una varible temporal
-                    if(ActualMij < MMin || (ActualMij == MMin && prioridadMin < prioridad)){
+                    //if(ActualMij < MMin || (ActualMij == MMin && prioridadMin < prioridad)){
+                    if(ActualMij < MMin || (ActualMij == MMin && prioridadMin < prioridad) || (ActualMij == MMin && prioridadMin == prioridad && i * DimensionMatrizI + j < iMin*DimensionMatrizI + jMin)){//esto es solo apra el que se escoja 1 0 en luagar de 43, sin mabrgo culquiera de los dos son elecciones correctas, esto es solo que me puse quiesquilloso
                     //if(MatrizDistanciasModificadas[i][j] < MMin){//en lugar de matriz deberia se solo una varible temporal
                         iMin = i;
                         jMin = j;

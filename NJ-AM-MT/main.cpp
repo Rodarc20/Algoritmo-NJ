@@ -1,6 +1,7 @@
 #include<iostream>
 #include<stdio.h>
 #include<stdlib.h>
+#include<chrono>
 #include<string>
 #include"nj.h"
 #include"nodo.h"
@@ -100,7 +101,7 @@ void LeerDatosPex(float ** & m, string * & d, int & n){//lee matrices cuadrasdas
 }
 
 int main(){
-    unsigned t0,t1;
+    //unsigned t0,t1;
     int n;
     float ** m;
     string * d;
@@ -116,18 +117,23 @@ int main(){
             cin >> m[i][j];
         }
     }*/
-    //LeerDatosPex(m, d, n);
-    LeerDatosSinNombre(m, d, n);
+    LeerDatosPex(m, d, n);
+    //LeerDatosSinNombre(m, d, n);
     NJ nj;
     Nodo ** result;
     nj.DatosIniciales(d, n);
-    t0 = clock();
+    //t0 = clock();
+    chrono::high_resolution_clock::time_point t0 = chrono::high_resolution_clock::now();
     int tam = nj.GenerarArbol(m, n, result);//en toroia no encesitorecibir n ya que ya lo recibo en datos iniciales
-    t1 = clock();
+    //t1 = clock();
+    chrono::high_resolution_clock::time_point t1 = chrono::high_resolution_clock::now();
     //ImprimirNodos(result, tam);
     ImprimirNodosPex(result, tam);
-    double time = (double(t1-t0)/CLOCKS_PER_SEC);
-    printf("Finalizado: %f\n", time);
+    //double time = (double(t1-t0)/CLOCKS_PER_SEC);
+    //printf("Finalizado: %f\n", time);
+    //chrono::duration<double> time = chrono::duration_cast<duration<double>>(t1 - t0);
+    chrono::duration<double> time = t1 - t0;
+    printf("Finalizado: %f\n", time.count());
     for(int i = 0; i < n; i++){
         delete [] m[i];
     }

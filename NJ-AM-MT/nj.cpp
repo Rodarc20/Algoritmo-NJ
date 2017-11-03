@@ -69,8 +69,10 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
             //if(minimos[i].Mij <= MMin && prioridadMin <= minimos[i].prioridad && minimos[i].i <= iMin && minimos[i].j <= jMin){//en lugar de matriz deberia se solo una varible temporal
             //if(minimos[i].Mij < MMin){
             //}
-            if(minimos[i].Mij < MMin || (minimos[i].Mij == MMin && prioridadMin < minimos[i].prioridad)){//en lugar de matriz deberia se solo una varible temporal
+            //if(minimos[i].Mij < MMin || (minimos[i].Mij == MMin && prioridadMin < minimos[i].prioridad)){//en lugar de matriz deberia se solo una varible temporal
+            if(minimos[i].Mij < MMin || (minimos[i].Mij == MMin && prioridadMin < minimos[i].prioridad) || (minimos[i].Mij == MMin && prioridadMin == minimos[i].prioridad && minimos[i].i * DimensionMatrizI + minimos[i].j < iMin*DimensionMatrizI + jMin)){
                 //arreglar lo de loss minimos
+                //cout << minimos[i].i << " " << minimos[i].j << endl;
                 veciMin = i;
                 MMin = minimos[i].Mij;
                 prioridadMin = minimos[i].prioridad;
@@ -317,7 +319,8 @@ void NJ::CalculoMijThread(int ini, int fin, int MC, DatosMij * minimo){
         //cout << ActualMij << endl;
         //if(ActualMij <= MMin && prioridadMin <= prioridad && imd <= iMin && jmd <= jMin){//como poner esto apropiadamentes (3,0) (3,1) aunq eu 3,1 tenga menor Mij, no entrara al if, porque 1 no es menor que 0
         //if(ActualMij <= MMin && prioridadMin < prioridad){
-        if(ActualMij < MMin || (ActualMij == MMin && prioridadMin < prioridad)){
+        //if(ActualMij < MMin || (ActualMij == MMin && prioridadMin < prioridad)){
+        if(ActualMij < MMin || (ActualMij == MMin && prioridadMin < prioridad) || (ActualMij == MMin && prioridadMin == prioridad && imd * DimensionMatrizI + jmd < iMin*DimensionMatrizI + jMin)){//esto es solo apra el que se escoja 1 0 en luagar de 43, sin mabrgo culquiera de los dos son elecciones correctas, esto es solo que me puse quiesquilloso
             iMin = imd;
             jMin = jmd;
             MMin = ActualMij;
