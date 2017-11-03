@@ -117,8 +117,8 @@ int main(){
             cin >> m[i][j];
         }
     }*/
-    //LeerDatosPex(m, d, n);
-    LeerDatosSinNombre(m, d, n);
+    LeerDatosPex(m, d, n);
+    //LeerDatosSinNombre(m, d, n);
     NJ nj;
     Nodo ** result;
     nj.DatosIniciales(d, n);
