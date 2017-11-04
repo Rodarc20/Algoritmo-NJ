@@ -1,21 +1,22 @@
 #include"nj.h"
 
 __global__
-void CalcularDivergenciaDevice(float ** MatrizDistancia, float * Divergencias, int n){//funcion ejecutada en la gpu, osea la funcion device
+void CalcularDivergenciaDevice(float * MatrizDistancia, float * Divergencias, int NumeroNodosReales, int DimensionActual){//funcion ejecutada en la gpu, osea la funcion device
     //n es la Dimension de la matriz y naturalmente tambien de las divergencias
     int i = blockIdx.x * blockDim.x + threadIdx.x;
-    if(i < n){
+    if(i < DimensionActual*DimensionActual){//n es n*n en realidad, estoy recibiendo el valor ya al cuadrado
         //printf("%f\n", Divergencias[i]);
+        i /= DimensionActual;
         Divergencias[i] = 0;
-        for(int j = 0; j < n; j++){
+        for(int j = 0; j < DimensionActual; j++){
             if(i != j){
-                Divergencias[i] += MatrizDistancia[i][j];
+                Divergencias[i] += MatrizDistancia[i*NumeroNodosReales + j];//se toma los nodos reales, para tomar enceuenta los espacios no usados
             }
         }
     }
 }
 __global__
-void CalcularMijDevice(float ** MatrizDistancias, float * Divergencias, float * MatrizModificada, int DimensionMatrizI, int inicialMD, int MC, int TamValores){//funcion ejecutada en la gpu, osea la funcion device
+void CalcularMijDevice(float * MatrizDistancias, float * Divergencias, float * MatrizModificada, int NumeroNodosReales, int DimensionMatrizI, int inicialMD, int MC, int TamValores){//funcion ejecutada en la gpu, osea la funcion device
     //n es la Dimension de la matriz y naturalmente tambien de las divergencias
     int i = blockIdx.x * blockDim.x + threadIdx.x;
     if(i < TamValores){
@@ -32,44 +33,44 @@ void CalcularMijDevice(float ** MatrizDistancias, float * Divergencias, float * 
         //int prioridad = (int) Nodos[ArregloId[imd]]->Valido + (int) Nodos[ArregloId[jmd]]->Valido;
         //MatrizDistanciasModificadas[i][j] = Mij(i,j);//no es necasrio almacenar
         //if(MatrizDistanciasModificadas[i][j] <= MMin && prioridadMin < prioridad){//en lugar de matriz deberia se solo una varible temporal
-        MatrizModificada[i] = MatrizDistancias[imd][jmd] - (Divergencias[imd] + Divergencias[jmd])/(DimensionMatrizI-2);
+        MatrizModificada[i] = MatrizDistancias[imd*NumeroNodosReales + jmd] - (Divergencias[imd] + Divergencias[jmd])/(DimensionMatrizI-2);
     }
 }
 __global__
-void MoviendoIDevice(float ** MatrizDistancias, int DimensionMatrizI, int i){
+void MoviendoIDevice(float * MatrizDistancias, int NumeroNodosReales, int DimensionMatrizI, int i){
     int k = blockIdx.x * blockDim.x + threadIdx.x;
     if(k < DimensionMatrizI){
         for(int h = i+1; h < DimensionMatrizI; h++){
-            float tempD = MatrizDistancias[h-1][k];
-            MatrizDistancias[h-1][k] = MatrizDistancias[h][k];
-            MatrizDistancias[h][k] = tempD;
+            float tempD = MatrizDistancias[(h-1) * NumeroNodosReales + k];
+            MatrizDistancias[(h-1)*NumeroNodosReales + k] = MatrizDistancias[h*NumeroNodosReales + k];
+            MatrizDistancias[h*NumeroNodosReales + k] = tempD;
         }
     }
 }
 __global__
-void MoviendoJDevice(float ** MatrizDistancias, int DimensionMatrizI, int i){
+void MoviendoJDevice(float * MatrizDistancias, int NumeroNodosReales, int DimensionMatrizI, int i){
     int k = blockIdx.x * blockDim.x + threadIdx.x;
     if(k < DimensionMatrizI){
         for(int h = i+1; h < DimensionMatrizI; h++){
-            float tempD = MatrizDistancias[k][h-1];
-            MatrizDistancias[k][h-1] = MatrizDistancias[k][h];
-            MatrizDistancias[k][h] = tempD;
+            float tempD = MatrizDistancias[k*NumeroNodosReales + h-1];
+            MatrizDistancias[k*NumeroNodosReales + h-1] = MatrizDistancias[k*NumeroNodosReales + h];
+            MatrizDistancias[k*NumeroNodosReales + h] = tempD;
         }
     }
 }
 __global__
-void ActualizarDistanciasDevice(float ** MatrizDistancias, int DimensionMatrizI, int j, float Distanciaij){//funcion ejecutada en la gpu, osea la funcion device
+void ActualizarDistanciasDevice(float * MatrizDistancias, int NumeroNodosReales, int DimensionMatrizI, int j, float Distanciaij){//funcion ejecutada en la gpu, osea la funcion device
     //cout << ini << " - " << fin << endl;
     int k = blockIdx.x * blockDim.x + threadIdx.x;
     if(k < DimensionMatrizI){
         //en este punto ya debe estar el nodo virtual nuevo en la posicion i, ya que no se movera alli, quiza yua este antes de entrar a esta funcion
         if(k != j){
-            MatrizDistancias[j][k] = (MatrizDistancias[j][k] + MatrizDistancias[DimensionMatrizI][k] - Distanciaij)/2;
-            MatrizDistancias[k][j] = MatrizDistancias[j][k];//quiza no sea necesario
+            MatrizDistancias[j*NumeroNodosReales + k] = (MatrizDistancias[j*NumeroNodosReales + k] + MatrizDistancias[DimensionMatrizI * NumeroNodosReales + k] - Distanciaij)/2;
+            MatrizDistancias[k*NumeroNodosReales + j] = MatrizDistancias[j*NumeroNodosReales + k];//quiza no sea necesario
         }
         else{
-            MatrizDistancias[j][k] = 0;
-            MatrizDistancias[k][j] = 0;
+            MatrizDistancias[j*NumeroNodosReales + k] = 0;
+            MatrizDistancias[k*NumeroNodosReales + j] = 0;
         }
     }
 }
@@ -94,40 +95,34 @@ void ImprimirDevice(float ** MatrizDistancia, int n){//funcion ejecutada en la g
 }
 
 int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Arbol){
+    //el primer cambio sera usar un vector que represente la amtriz cuadrada, luego usare un vector para representar la matriz compacat
     //copiar la matriz de distancias//quiza no neceiso modificarla
     //esta amtriz recibida peuede ser la matriz inicial, quiza no sea necesario copiar o almacenarla en esta clase
     DimensionMatrizI= NumeroNodosReales;
     ArregloId = new int [NumeroNodosReales];
     Divergencias = new float [NumeroNodosReales];
-    MatrizDistancias = new float * [NumeroNodosReales];
+    MatrizDistancias = new float [NumeroNodosReales * NumeroNodosReales];
     Orden = 0;
 
     //la primera matriz de distanciasI debe ser igual
     for(int i = 0; i < NumeroNodosReales; i++){//quiza sea util si la matriz no esta de la forma que deseo
-        MatrizDistancias[i] = new float [NumeroNodosReales];
-        //MatrizDistanciasModificadas[i] = new float [NumeroElementos];
         ArregloId[i] = i;
-        //Divergencias[i] = i;
         for(int j = 0; j < NumeroNodosReales; j++){
-            MatrizDistancias[i][j] = MatrizDistancia[i][j];
+            MatrizDistancias[i*NumeroNodosReales + j] = MatrizDistancia[i][j];
         }
     }
     //Generando datos en Device
-    int size = NumeroNodosReales * sizeof(float);
-    int sizem = NumeroNodosReales * sizeof(float*);
-    float **  MatrizDistanciasHost = new float * [NumeroNodosReales];//para controlar la creacion de memoria en device
-    float **  MatrizDistanciasDevice;
-    cudaMalloc((void***) & MatrizDistanciasDevice, sizem);
-    for(int i = 0; i < NumeroNodosReales; i++){
-        cudaMalloc((void **) &(MatrizDistanciasHost[i]), size);
-        cudaMemcpy(MatrizDistanciasHost[i], MatrizDistancias[i], size, cudaMemcpyHostToDevice);
-        //ImprimirFilaDevice<<<ceil(DimensionMatrizI/256.0), 256>>> (MatrizDistanciasHost[i], DimensionMatrizI);
-    }
-    cudaMemcpy(MatrizDistanciasDevice, MatrizDistanciasHost, sizem, cudaMemcpyHostToDevice);
+    int sizeMD = NumeroNodosReales*NumeroNodosReales * sizeof(float);
+    float *  MatrizDistanciasDevice;
+    cudaMalloc((void**) & MatrizDistanciasDevice, sizeMD);
+    //desventaja, es que hay que copiarlo todo, incluso los valores uqe ya no se usan
+    //lo que podria hacerse es generar una nueva matriz en memoria,y actualzar los datos alli, para luego eliminar la nterior, de esa forma el traspaso se ira haciendo cada vez mas rapido
+    cudaMemcpy(MatrizDistanciasDevice, MatrizDistancias, sizeMD, cudaMemcpyHostToDevice);
     //ImprimirDevice<<<ceil(DimensionMatrizI/256.0), 256>>> (MatrizDistanciasDevice, DimensionMatrizI);
 
+    int sizeDiv = NumeroNodosReales * sizeof(float);
     float * DivergenciasDevice;
-    cudaMalloc((void **) & DivergenciasDevice , size);
+    cudaMalloc((void **) & DivergenciasDevice , sizeDiv);
     //cudaMemcpy(DivergenciasDevice, Divergencias, size, cudaMemcpyHostToDevice);
 
     int inicialMD = (DimensionMatrizI-1)/2 + 1;
@@ -135,10 +130,10 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
     int Mf = DimensionMatrizI - inicialMD;
     int TamValores = (DimensionMatrizI*DimensionMatrizI - DimensionMatrizI)/2;//(n^2 - n)/2 = 15 ejemplo
     
-    size = TamValores * sizeof(float);
+    int sizeMM = TamValores * sizeof(float);
     MatrizModificada = new float [TamValores];
     float * MatrizModificadaDevice;
-    cudaMalloc((void **) & MatrizModificadaDevice , size);
+    cudaMalloc((void **) & MatrizModificadaDevice , sizeMM);
 
     //ImprimirArreglo(ArregloId, NumeroNodosReales);
     //ImprimirMatriz(MatrizDistancias, NumeroNodosReales);
@@ -160,9 +155,9 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
         //cout << "TamValores: " << TamValores << endl;
 
         int sizeDivergencias = DimensionMatrizI * sizeof(float);
-        CalcularDivergenciaDevice<<<ceil(DimensionMatrizI/256.0), 256>>> (MatrizDistanciasDevice, DivergenciasDevice, DimensionMatrizI);
+        CalcularDivergenciaDevice<<<ceil(DimensionMatrizI/256.0), 256>>> (MatrizDistanciasDevice, DivergenciasDevice, NumeroNodosReales, DimensionMatrizI);
         cudaMemcpy(Divergencias, DivergenciasDevice, sizeDivergencias, cudaMemcpyDeviceToHost);//se necesita para la creacion del nuevo nodo virtual
-        CalcularMijDevice<<<ceil(DimensionMatrizI/256.0), 256>>>(MatrizDistanciasDevice, DivergenciasDevice, MatrizModificadaDevice, DimensionMatrizI, inicialMD, MC, TamValores);
+        CalcularMijDevice<<<ceil(DimensionMatrizI/256.0), 256>>>(MatrizDistanciasDevice, DivergenciasDevice, MatrizModificadaDevice, NumeroNodosReales, DimensionMatrizI, inicialMD, MC, TamValores);
         cudaMemcpy(MatrizModificada, MatrizModificadaDevice, TamValores * sizeof(float), cudaMemcpyDeviceToHost);
 
 
@@ -224,10 +219,10 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
                 for(int j = 0; j < i; j++){
                     //no calcular si i y j son iguales; y no hacer caluclo doble, es decir solo recorrel el triangulo superior o inferior
                     //if(i != j){
-                        if(MatrizDistancias[i][j] < DMin){//en lugar de matriz deberia se solo una varible temporal
+                        if(MatrizDistancias[i*NumeroNodosReales + j] < DMin){//en lugar de matriz deberia se solo una varible temporal
                             iMin = i;
                             jMin = j;
-                            DMin = MatrizDistancias[i][j];
+                            DMin = MatrizDistancias[i*NumeroNodosReales + j];
                         }
                     //}
                 }
@@ -258,7 +253,7 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
         ArregloId[jMin] = NumeroNodosReales + NumeroNodosVirtuales - 1;
         //ImprimirArreglo(ArregloId, DimensionMatrizI);
 
-        NuevaMatrizDistancias(iMin, jMin, MatrizDistanciasDevice, MatrizDistanciasHost);//ya se redujo el tamaño de la matriz//aqui dentro esta el n--
+        NuevaMatrizDistancias(iMin, jMin, MatrizDistanciasDevice);//ya se redujo el tamaño de la matriz//aqui dentro esta el n--
         //cout << "creada nueva matriz de distancias" << endl;
     }
     //al final se calculo una nuev matriz de distancias, por lo tanto arreglo ID tiene solo 2 elementos
@@ -272,15 +267,12 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
     //ImprimirMatriz(MatrizDistanciasModificadas, DimensionMatrizI);
     Nodos[ArregloId[0]]->Padre = Nodos[ArregloId[1]];
     Nodos[ArregloId[0]]->PadreId = ArregloId[1];//o usando -D sobre la linea anterior
-    Nodos[ArregloId[0]]->DistanciaPadre= MatrizDistancias[0][1];//o usando -D sobre la linea anterior
+    Nodos[ArregloId[0]]->DistanciaPadre= MatrizDistancias[0*NumeroNodosReales + 1];//o usando -D sobre la linea anterior
     Nodos[ArregloId[1]]->Padre = Nodos[ArregloId[0]];
     Nodos[ArregloId[1]]->PadreId = ArregloId[0];//o usando -D sobre la linea anterior
-    Nodos[ArregloId[1]]->DistanciaPadre= MatrizDistancias[0][1];//o usando -D sobre la linea anterior
+    Nodos[ArregloId[1]]->DistanciaPadre= MatrizDistancias[0*NumeroNodosReales + 1];//o usando -D sobre la linea anterior
     //falta calcular estas distancias
     Arbol = Nodos;
-    for(int i = 0; i < NumeroNodosReales; i++){
-        cudaFree(MatrizDistanciasHost[i]);
-    }
     cudaFree(MatrizDistanciasDevice);
     cudaFree(DivergenciasDevice);
     return NumeroNodos;
@@ -288,15 +280,15 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
 
 float NJ::Mij(int i, int j){// en espacio de arreglo id 
     //como trabajo sobre la matriz inferior, esta bien lo i j que recibo, que me marque el (1,0)
-    return MatrizDistancias[i][j] - (Divergencias[i] + Divergencias[j])/(DimensionMatrizI-2);
+    return MatrizDistancias[i*NumeroNodosReales + j] - (Divergencias[i] + Divergencias[j])/(DimensionMatrizI-2);
 }
 
-void NJ::NuevaMatrizDistancias(int i, int j, float ** MatrizDistanciasDevice, float ** MatrizDistanciasHost){//i y j son los nodos que fueron desginados como similares en esa iteracion
+void NJ::NuevaMatrizDistancias(int i, int j, float * MatrizDistanciasDevice){//i y j son los nodos que fueron desginados como similares en esa iteracion
     //antes de ahcer el corrimiento seria buno calcular las deistancias para el nuevo, y solo hacer el cambio con i
     //como el j es el mas a la izquierda, ese lo dejo, y muevo el i hacia el final de la matriz
     //Host solo almacena los punteros de las filas en device
     //cout << "Nueva matriz de distacnias " << i << ", " << j << endl;//se escojo e primero
-    float Distanciaij = MatrizDistancias[i][j];//este se puede dejar asi, ya que uso la matriz inferior
+    float Distanciaij = MatrizDistancias[i*NumeroNodosReales + j];//este se puede dejar asi, ya que uso la matriz inferior
 
     for(int k = i+1; k < DimensionMatrizI; k++){
         int tempId = ArregloId[k-1];//solo debe modificar lo concerniete al arreglo j
@@ -305,18 +297,17 @@ void NJ::NuevaMatrizDistancias(int i, int j, float ** MatrizDistanciasDevice, fl
         
     }
     //estos i y j, estan sobre el ArrgloId
-    MoviendoIDevice<<<ceil(DimensionMatrizI/256.0), 256>>>(MatrizDistanciasDevice, DimensionMatrizI, i);
-    MoviendoJDevice<<<ceil(DimensionMatrizI/256.0), 256>>>(MatrizDistanciasDevice, DimensionMatrizI, i);
+    MoviendoIDevice<<<ceil(DimensionMatrizI/256.0), 256>>>(MatrizDistanciasDevice, NumeroNodosReales, DimensionMatrizI, i);
+    MoviendoJDevice<<<ceil(DimensionMatrizI/256.0), 256>>>(MatrizDistanciasDevice, NumeroNodosReales, DimensionMatrizI, i);
     //cout << "i al final" << endl;
     //ImprimirArreglo(ArregloId, DimensionMatrizI);
     //ImprimirMatriz(MatrizDistancias, DimensionMatrizI);
     DimensionMatrizI--;
     //j ahora esta en la posicion DimensionMatriz
-    ActualizarDistanciasDevice<<<ceil(DimensionMatrizI/256.0), 256>>>(MatrizDistanciasDevice, DimensionMatrizI, j, Distanciaij);
-    int size = DimensionMatrizI * sizeof(float);
-    for(int i = 0; i < DimensionMatrizI; i++){
-        cudaMemcpy(MatrizDistancias[i], MatrizDistanciasHost[i], size, cudaMemcpyDeviceToHost);
-    }
+    ActualizarDistanciasDevice<<<ceil(DimensionMatrizI/256.0), 256>>>(MatrizDistanciasDevice, NumeroNodosReales, DimensionMatrizI, j, Distanciaij);
+    int size = NumeroNodosReales * NumeroNodosReales * sizeof(float);
+    //int size = DimensionMatrizI * sizeof(float);
+    cudaMemcpy(MatrizDistancias, MatrizDistanciasDevice, size, cudaMemcpyDeviceToHost);
     //cout << "fin creacio nnueva matriz" << endl;
     //en que momento ubico al nuevo nodo viertual cundo lo creo?
     //
@@ -357,8 +348,8 @@ void NJ::CrearNodoVirtual(int i, int j){//es que deberia recibir algun dato, nom
     //cout << MatrizDistancias[i][j] << endl;
     //cout << Divergencias[j] << endl;
     //cout << Divergencias[i] << endl;
-    float Lj = MatrizDistancias[i][j]/2 + (Divergencias[j] - Divergencias[i])/(2*(DimensionMatrizI-2));
-    float Li = MatrizDistancias[i][j] - Lj;
+    float Lj = MatrizDistancias[i*NumeroNodosReales + j]/2 + (Divergencias[j] - Divergencias[i])/(2*(DimensionMatrizI-2));
+    float Li = MatrizDistancias[i*NumeroNodosReales + j] - Lj;
     i = ArregloId[i];
     j = ArregloId[j];
 
@@ -420,14 +411,13 @@ NJ::NJ(){
 }
 
 NJ::~NJ(){
-    for(int i = 0; i < NumeroNodosReales; i++){//quiza sea util si la matriz no esta de la forma que deseo
-        delete [] MatrizDistancias[i];
-    }
     delete [] MatrizDistancias;
     delete [] ArregloId;
     delete [] Divergencias;
     //el arreglo nodos debo eliminarlo??
 }
+//Probar vreando una nueva matriz para la nueva matriz de distancias, este calculo es en paralelo, y ya no habria corrimientos, bastaria con calcular las nuevas posiciones dentro de cada thread
+//asi copiar menos informacion
 
 //buscar donde hay redundancia en el acceso a datos, quiza todos los sij, se puedan calcular a la vez, o cosas asi
 //busar como manejar en la misma matriz los nuevos nodos virtuales, los reemplazos etc, para no crear matrices mas grandes, y seguir utilizando la que esta, quiza ids temporanoles, o que se yo
