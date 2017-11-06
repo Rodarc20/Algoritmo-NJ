@@ -3,6 +3,83 @@
 //este usa una matriz secundaria, don de lamacena la nueva matriz de distancias,ppara luego reemplzar la anteior, habran varios free y malloc
 //si es muy lento con tanto malloc, puedo ya que tengo dos arreglos de matiz larga,s cambair entre ellas en cada iteracion y copiar las informacion es de acuerdo al tamño asi evito mover datos, solo copiar a l anueva matrz
 
+/*__device__ inline void swap(float & a, float & b) {
+	// Alternative swap doesn't use a temporary register:
+	// a ^= b;
+	// b ^= a;
+	// a ^= b;
+    float tmp = a;
+    a = b;
+    b = tmp;
+}
+
+__global__ static void bitonicSort(float * values, int tam) {//modificar para que reciba un a estructura para los minimos
+    extern __shared__ int shared[];
+    const int tid = threadIdx.x;
+    // Copy input to shared mem.
+    shared[tid] = values[tid];
+    __syncthreads();
+    // Parallel bitonic sort.
+    for (int k = 2; k <= tam; k *= 2) {
+        // Bitonic merge:
+        for (int j = k / 2; j>0; j /= 2) {
+            int ixj = tid ^ j;
+            if (ixj > tid) {
+                if ((tid & k) == 0) {
+                    if (shared[tid] > shared[ixj]) {
+                        swap(shared[tid], shared[ixj]);
+                    }
+                }
+                else {
+                    if (shared[tid] < shared[ixj]) {
+                        swap(shared[tid], shared[ixj]);
+                    }
+                }
+            }
+            __syncthreads();
+        }
+    }
+    // Write result.
+    values[tid] = shared[tid];
+}*/
+
+__global__ static void bitonicSortMij(DatosMij * shared, int tam, int DimensionMatrizI) {//modificar para que reciba un a estructura para los minimos
+    const int tid = threadIdx.x;
+    // Copy input to shared mem.
+    __syncthreads();
+    // Parallel bitonic sort.
+    for (int k = 2; k <= tam; k *= 2) {
+        // Bitonic merge:
+        for (int j = k / 2; j>0; j /= 2) {
+            int ixj = tid ^ j;
+            if (ixj > tid) {
+                if ((tid & k) == 0) {
+                    //if (shared[tid] > shared[ixj]) {
+                    if(shared[ixj].Mij < shared[tid].Mij || (shared[ixj].Mij == shared[tid].Mij && shared[tid].prioridad < shared[ixj].prioridad) || (shared[ixj].Mij == shared[tid].Mij && shared[tid].prioridad == shared[ixj].prioridad && shared[ixj].i * DimensionMatrizI + shared[ixj].j < shared[tid].i*DimensionMatrizI + shared[tid].j)){
+                    //if(shared[tid].Mij < MMin || (minimos[i].Mij == MMin && prioridadMin < minimos[i].prioridad) || (minimos[i].Mij == MMin && prioridadMin == minimos[i].prioridad && minimos[i].i * DimensionMatrizI + minimos[i].j < iMin*DimensionMatrizI + jMin)){
+                        //swap(shared[tid], shared[ixj]);
+                        DatosMij temp = shared[tid];
+                        shared[tid] = shared[ixj];
+                        shared[ixj] = temp;
+                    }
+                }
+                else {
+                    //if (shared[tid] < shared[ixj]) {
+                    if(shared[tid].Mij < shared[ixj].Mij || (shared[tid].Mij == shared[ixj].Mij && shared[ixj].prioridad < shared[tid].prioridad) || (shared[tid].Mij == shared[ixj].Mij && shared[ixj].prioridad == shared[tid].prioridad && shared[tid].i * DimensionMatrizI + shared[tid].j < shared[ixj].i*DimensionMatrizI + shared[ixj].j)){
+                        DatosMij temp = shared[tid];
+                        shared[tid] = shared[ixj];
+                        shared[ixj] = temp;
+                        //swap(shared[tid], shared[ixj]);
+                    }
+                }
+            }
+            __syncthreads();
+        }
+    }
+}
+//dejara el minimo en la primera posicion, en teoria
+
+
 __global__
 void ActualizarArregloId(int * ArregloId, int * ArregloIdNuevo, int DimensionMatrizIN, int i, int j, int NuevoIdJ){
     int k = blockIdx.x * blockDim.x + threadIdx.x;
@@ -29,6 +106,26 @@ void CalcularDivergenciaDevice(float * MatrizDistancia, float * Divergencias, in
                 Divergencias[i] += MatrizDistancia[i*DimensionActual+ j];//se toma los nodos reales, para tomar enceuenta los espacios no usados
             }
         }
+    }
+}
+__global__
+void CopiarMijDevice(DatosMij * Ordenar, float * MatrizModificada, int *ArregloId, int NumeroNodosReales,  int DimensionMatrizI, int inicialMD, int MC, int TamValores){//funcion ejecutada en la gpu, osea la funcion device
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    if(i < TamValores){
+        int iM = i / MC;//revisar que estossean los correctos
+        int jM = i % MC;
+        int imd;
+        if(jM/(inicialMD + iM)){
+            imd = MC - (inicialMD + iM);
+        }
+        else{
+            imd = inicialMD + iM;
+        }
+        int jmd = jM % (inicialMD + iM);
+        Ordenar[i].Mij = MatrizModificada[i];
+        Ordenar[i].i = imd;
+        Ordenar[i].j = jmd;
+        Ordenar[i].prioridad = (int) (ArregloId[imd]<NumeroNodosReales) + (int) (ArregloId[jmd]< NumeroNodosReales);
     }
 }
 __global__
@@ -188,6 +285,11 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
     float * MatrizModificadaDevice;
     cudaMalloc((void **) & MatrizModificadaDevice , sizeMM);
 
+    Ordenar = new DatosMij [TamValores];
+    DatosMij * OrdenarDevice;
+    int sizeOM = TamValores * sizeof(DatosMij);
+    cudaMalloc((void **) & OrdenarDevice , sizeOM);
+
     int * ArregloIdDevice;
     int * ArregloIdNuevoDevice;
     int sizeAID = NumeroNodosReales * sizeof(int);
@@ -218,10 +320,16 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
         cudaMemcpy(Divergencias, DivergenciasDevice, sizeDivergencias, cudaMemcpyDeviceToHost);//se necesita para la creacion del nuevo nodo virtual
         CalcularMijDevice<<<ceil(DimensionMatrizI/256.0), 256>>>(MatrizDistanciasDevice, DivergenciasDevice, MatrizModificadaDevice, DimensionMatrizI, inicialMD, MC, TamValores);
         cudaMemcpy(MatrizModificada, MatrizModificadaDevice, TamValores * sizeof(float), cudaMemcpyDeviceToHost);
+        CopiarMijDevice<<<ceil(DimensionMatrizI/256.0), 256>>>(OrdenarDevice, MatrizModificadaDevice, ArregloIdDevice, NumeroNodosReales, DimensionMatrizI, inicialMD, MC, TamValores);
+        //bitonicSortMij<<<1, TamValores>>>(OrdenarDevice, TamValores, DimensionMatrizI);
+        bitonicSortMij<<<1, TamValores, TamValores * sizeof(DatosMij)>>>(OrdenarDevice, TamValores, DimensionMatrizI);
+        cudaMemcpy(Ordenar, OrdenarDevice, TamValores * sizeof(DatosMij), cudaMemcpyDeviceToHost);
+
+        //copiar al arreglo de Datos Mij, cuyos i y j, son los convertidos.
 
 
         //en realidad esta busuqeda del minimo deberia estar en cuda
-        int iMin = DimensionMatrizI, jMin = DimensionMatrizI;
+        /*int iMin = DimensionMatrizI, jMin = DimensionMatrizI;
         int imdMin = DimensionMatrizI, jmdMin = DimensionMatrizI;
         int prioridadMin = -1;
         float MMin = numeric_limits<float>::max();//valor maximo
@@ -259,7 +367,7 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
                     }
                 //}
             }
-        }
+        }*/
         //cout << "eleccion del modificado sij " << iMin << " " << jMin << endl;//no esta mostrando el nombre, esta mostrando los i j de la matriz
         /*int imd;
         if(jMin/(inicialMD + iMin)){
@@ -271,8 +379,12 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
         int jmd = jMin % (inicialMD + iMin);
         iMin = imd;
         jMin = jmd;*/
-        iMin = imdMin;
-        jMin = jmdMin;
+
+        /*for(int i = 0; i < TamValores; i++){
+            cout << i << ": " << Ordenar[i].Mij << " " << Ordenar[i].i << " " << Ordenar[i].j << " " << Ordenar[i].prioridad << endl;
+        }*/
+        int iMin = Ordenar[0].i;
+        int jMin = Ordenar[0].j;
         if(it == NumeroNodosReales-3){//este caso deberia estar mejo estructurado
             //cout << "caso especial: " << it << endl;
             float DMin = numeric_limits<float>::max();//valor maximo

@@ -10,6 +10,12 @@
 using namespace std;
 
 
+struct DatosMij{
+    int i;
+    int j;
+    float Mij;
+    int prioridad;
+};
 
 class NJ {
     public:
@@ -31,6 +37,7 @@ class NJ {
         float * Divergencias;//en realidad es solo para evitar alcular algo dos veces
         int DimensionMatrizI;//Ponerle nombre n para que se entienda con el algoritmo esta se va reduciendo en cada itaracion
         int DimensionMatrizIN;//Ponerle nombre n para que se entienda con el algoritmo esta se va reduciendo en cada itaracion
+        DatosMij * Ordenar;
 
         //matriz que contine la evalaucaion para esocger los outs mas similares
         float ** MatrizDistanciasModificadas;
