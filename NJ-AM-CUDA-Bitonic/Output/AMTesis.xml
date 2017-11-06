@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<graph description="">
+<vertex id="0">
+<valid value="1"/>
+<x-coordinate value="0"/>
+<y-coordinate value="0"/>
+<url value=""/>
+<order value="0"/>
+<scalars>
+<scalar name="cdata" value="0"/>
+</scalars>
+<labels>
+<label name="title" value="A"/>
+<label name="file name" value=""/>
+</labels>
+<parent value="6" distance="1"/>
+</vertex>
+<vertex id="1">
+<valid value="1"/>
+<x-coordinate value="6"/>
+<y-coordinate value="6"/>
+<url value=""/>
+<order value="1"/>
+<scalars>
+<scalar name="cdata" value="0"/>
+</scalars>
+<labels>
+<label name="title" value="B"/>
+<label name="file name" value=""/>
+</labels>
+<parent value="9" distance="2"/>
+</vertex>
+<vertex id="2">
+<valid value="1"/>
+<x-coordinate value="12"/>
+<y-coordinate value="12"/>
+<url value=""/>
+<order value="2"/>
+<scalars>
+<scalar name="cdata" value="0"/>
+</scalars>
+<labels>
+<label name="title" value="C"/>
+<label name="file name" value=""/>
+</labels>
+<parent value="7" distance="-8.10812e+37"/>
+</vertex>
+<vertex id="3">
+<valid value="1"/>
+<x-coordinate value="18"/>
+<y-coordinate value="18"/>
+<url value=""/>
+<order value="5"/>
+<scalars>
+<scalar name="cdata" value="0"/>
+</scalars>
+<labels>
+<label name="title" value="D"/>
+<label name="file name" value=""/>
+</labels>
+<parent value="8" distance="6.75"/>
+</vertex>
+<vertex id="4">
+<valid value="1"/>
+<x-coordinate value="24"/>
+<y-coordinate value="24"/>
+<url value=""/>
+<order value="3"/>
+<scalars>
+<scalar name="cdata" value="0"/>
+</scalars>
+<labels>
+<label name="title" value="E"/>
+<label name="file name" value=""/>
+</labels>
+<parent value="7" distance="-1.62162e+38"/>
+</vertex>
+<vertex id="5">
+<valid value="1"/>
+<x-coordinate value="30"/>
+<y-coordinate value="30"/>
+<url value=""/>
+<order value="-1"/>
+<scalars>
+<scalar name="cdata" value="0"/>
+</scalars>
+<labels>
+<label name="title" value="F"/>
+<label name="file name" value=""/>
+</labels>
+<parent value="-1" distance="0"/>
+</vertex>
+<vertex id="6">
+<valid value="0"/>
+<x-coordinate value="36"/>
+<y-coordinate value="36"/>
+<url value=""/>
+<order value="6"/>
+<scalars>
+<scalar name="cdata" value="0"/>
+</scalars>
+<labels>
+<label name="title" value=""/>
+<label name="file name" value=""/>
+</labels>
+<son value="0" distance="1"/>
+<son value="1" distance="4"/>
+<parent value="9" distance="0.25"/>
+</vertex>
+<vertex id="7">
+<valid value="0"/>
+<x-coordinate value="42"/>
+<y-coordinate value="42"/>
+<url value=""/>
+<order value="4"/>
+<scalars>
+<scalar name="cdata" value="0"/>
+</scalars>
+<labels>
+<label name="title" value=""/>
+<label name="file name" value=""/>
+</labels>
+<son value="2" distance="-8.10812e+37"/>
+<son value="4" distance="-1.62162e+38"/>
+<parent value="8" distance="0.25"/>
+</vertex>
+<vertex id="8">
+<valid value="0"/>
+<x-coordinate value="48"/>
+<y-coordinate value="48"/>
+<url value=""/>
+<order value="7"/>
+<scalars>
+<scalar name="cdata" value="0"/>
+</scalars>
+<labels>
+<label name="title" value=""/>
+<label name="file name" value=""/>
+</labels>
+<son value="7" distance="0.25"/>
+<son value="3" distance="6.75"/>
+<parent value="9" distance="-0.25"/>
+</vertex>
+<vertex id="9">
+<valid value="0"/>
+<x-coordinate value="54"/>
+<y-coordinate value="54"/>
+<url value=""/>
+<order value="0"/>
+<scalars>
+<scalar name="cdata" value="0"/>
+</scalars>
+<labels>
+<label name="title" value=""/>
+<label name="file name" value=""/>
+</labels>
+<son value="6" distance="0.25"/>
+<son value="8" distance="-0.25"/>
+<parent value="1" distance="2"/>
+</vertex>
+</graph>
+Finalizado: 0.133416
