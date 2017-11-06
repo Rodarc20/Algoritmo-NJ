@@ -227,12 +227,17 @@ void NJ::CrearNodoVirtual(int i, int j){//es que deberia recibir algun dato, nom
     //aqui recibo los i y j siendo i > j, por lo tanto lo que hacia con j debo hacerlo con y y lo que hacia con i debo hacerlo conj
     //float Lj = MatrizDistancias[j][i]/2 + (Divergencias[j] - Divergencias[i])/(2*(DimensionMatrizI-2));
     //float Li = MatrizDistancias[j][i] - Lj;
+    //cout << MatrizDistancias[i][j] << endl;
+    //cout << Divergencias[j] << endl;
+    //cout << Divergencias[i] << endl;
     float Lj = MatrizDistancias[i][j]/2 + (Divergencias[j] - Divergencias[i])/(2*(DimensionMatrizI-2));
     float Li = MatrizDistancias[i][j] - Lj;
     i = ArregloId[i];
     j = ArregloId[j];
 
     int nv = NumeroNodosReales + NumeroNodosVirtuales;
+    //cout <<"arreglo: " << i << "-" << j << " " << "id nuevo nodo virtual " << nv << endl;
+    //cout << "Lj: " << Lj << " Li: " << Li << endl;
 
     Nodos[nv]->HijosId[0] = j;
     Nodos[nv]->HijosId[1] = i;
