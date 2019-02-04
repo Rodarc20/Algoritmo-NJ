@@ -18,7 +18,7 @@ void ImprimirNodos(Nodo ** nodos, int n){
     }
 }
 
-void ImprimirNodosPex(Nodo ** nodos, int n){
+void ImprimirNodosPex(Nodo ** nodos, string * clase, int n){
     cout << "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?>" << endl;
     cout << "<graph description=\"\">" << endl;
 
@@ -30,7 +30,12 @@ void ImprimirNodosPex(Nodo ** nodos, int n){
         cout << "<url value=\"" << "\"/>" << endl;
         cout << "<order value=\"" << nodos[i]->Orden << "\"/>" << endl;//no esta en el pex
         cout << "<scalars>" << endl;
-        cout << "<scalar name=\"cdata\" value=\"" << 0.0 << "\"/>" << endl;
+        if(nodos[i]->Valido){
+            cout << "<scalar name=\"cdata\" value=\"" << clase[i] << "\"/>" << endl;
+        }
+        else{
+            cout << "<scalar name=\"cdata\" value=\"" << "0.0" << "\"/>" << endl;
+        }
         cout << "</scalars>" << endl;
         cout << "<labels>" << endl;
         cout << "<label name=\"title\" value=\"" << nodos[i]->Nombre << "\"/>" << endl;
@@ -77,12 +82,12 @@ void LeerDatosSinNombre(float ** & m, string * & d, int & n){//lee matrices cuad
     }
 }
 
-void LeerDatosPex(float ** & m, string * & d, int & n){//lee matrices cuadrasdas con  todos su valores, primero el numero de datos, luego los nombres de los datos, luego la clase de los datos para el cdata y luego la matriz
+void LeerDatosPex(float ** & m, string * & d, string * & clase, int & n){//lee matrices cuadrasdas con  todos su valores, primero el numero de datos, luego los nombres de los datos, luego la clase de los datos para el cdata y luego la matriz
     
     cin >> n;
     m = new float * [n];
     d = new string [n];
-    string * clase = new string [n];
+    clase = new string [n];
     for(int i = 0; i < n; i++){
         cin >> d[i];
         m[i] = new float [n];
@@ -97,7 +102,6 @@ void LeerDatosPex(float ** & m, string * & d, int & n){//lee matrices cuadrasdas
         }
     }
     //devuelvo matrices cuadradas, con los datos reflejados
-    delete [] clase;
 }
 
 int main(){
@@ -105,6 +109,7 @@ int main(){
     int n;
     float ** m;
     string * d;
+    string * clase;
     /*cin >> n;
     float ** m = new float * [n];
     string * d = new string [n];
@@ -117,7 +122,7 @@ int main(){
             cin >> m[i][j];
         }
     }*/
-    LeerDatosPex(m, d, n);
+    LeerDatosPex(m, d, clase, n);
     //LeerDatosSinNombre(m, d, n);
     NJ nj;
     Nodo ** result;
@@ -128,17 +133,18 @@ int main(){
     //t1 = clock();
     chrono::high_resolution_clock::time_point t1 = chrono::high_resolution_clock::now();
     //ImprimirNodos(result, tam);
-    ImprimirNodosPex(result, tam);
+    ImprimirNodosPex(result, clase, tam);
     //double time = (double(t1-t0)/CLOCKS_PER_SEC);
     //printf("Finalizado: %f\n", time);
     //chrono::duration<double> time = chrono::duration_cast<duration<double>>(t1 - t0);
     chrono::duration<double> time = t1 - t0;
-    printf("Finalizado: %f\n", time.count());
+    //printf("Finalizado: %f\n", time.count());
     for(int i = 0; i < n; i++){
         delete [] m[i];
     }
     delete [] m;
     delete [] d;
+    delete [] clase;
     for(int i = 0; i < tam; i++){
         delete result[i];
     }

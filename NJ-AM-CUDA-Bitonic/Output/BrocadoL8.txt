@@ -1153,7 +1153,7 @@
 <label name="title" value="PMCortado12.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="3902" distance="-nan"/>
+<parent value="3902" distance="nan"/>
 </vertex>
 <vertex id="77">
 <valid value="1"/>
@@ -5743,7 +5743,7 @@
 <label name="title" value="Normal578.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="3290" distance="-nan"/>
+<parent value="3290" distance="nan"/>
 </vertex>
 <vertex id="383">
 <valid value="1"/>
@@ -6463,7 +6463,7 @@
 <label name="title" value="Normal530.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="3194" distance="-nan"/>
+<parent value="3194" distance="nan"/>
 </vertex>
 <vertex id="431">
 <valid value="1"/>
@@ -7873,7 +7873,7 @@
 <label name="title" value="Normal435.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="3006" distance="-nan"/>
+<parent value="3006" distance="nan"/>
 </vertex>
 <vertex id="525">
 <valid value="1"/>
@@ -11743,7 +11743,7 @@
 <label name="title" value="Normal177.jpg"/>
 <label name="file name" value=""/>
 </labels>
-<parent value="2490" distance="-nan"/>
+<parent value="2490" distance="nan"/>
 </vertex>
 <vertex id="783">
 <valid value="1"/>
@@ -38290,7 +38290,7 @@
 <label name="file name" value=""/>
 </labels>
 <son value="2489" distance="nan"/>
-<son value="782" distance="-nan"/>
+<son value="782" distance="nan"/>
 <parent value="2491" distance="nan"/>
 </vertex>
 <vertex id="2491">
@@ -47062,7 +47062,7 @@
 <label name="file name" value=""/>
 </labels>
 <son value="3005" distance="nan"/>
-<son value="524" distance="-nan"/>
+<son value="524" distance="nan"/>
 <parent value="3007" distance="nan"/>
 </vertex>
 <vertex id="3007">
@@ -50258,7 +50258,7 @@
 <label name="file name" value=""/>
 </labels>
 <son value="3193" distance="nan"/>
-<son value="430" distance="-nan"/>
+<son value="430" distance="nan"/>
 <parent value="3195" distance="nan"/>
 </vertex>
 <vertex id="3195">
@@ -51890,7 +51890,7 @@
 <label name="file name" value=""/>
 </labels>
 <son value="3289" distance="nan"/>
-<son value="382" distance="-nan"/>
+<son value="382" distance="nan"/>
 <parent value="3291" distance="nan"/>
 </vertex>
 <vertex id="3291">
@@ -62294,7 +62294,7 @@
 <label name="file name" value=""/>
 </labels>
 <son value="3901" distance="nan"/>
-<son value="76" distance="-nan"/>
+<son value="76" distance="nan"/>
 <parent value="3903" distance="nan"/>
 </vertex>
 <vertex id="3903">
@@ -64831,4 +64831,4 @@
 <parent value="1" distance="nan"/>
 </vertex>
 </graph>
-Finalizado: 10.583369
+Finalizado: 9.606197

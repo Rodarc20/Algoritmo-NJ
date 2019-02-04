@@ -42,7 +42,7 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
         int prioridadMin = -1;
         float MMin = numeric_limits<float>::max();//valor maximo
         //copiada quiza no sea util
-        cout << "Minimos" << endl;
+        //cout << "Minimos" << endl;
         for(int i = 1; i < DimensionMatrizI; i++){//la forma de recorrer hace que i > j siempre primera posicion (1,0)
             for(int j = 0; j < i; j++){//para recorrer la matriz tringula inferior
                 //if(i != j){//ya no es necesario este if
@@ -50,7 +50,7 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
                     //MatrizDistanciasModificadas[i][j] = Mij(i,j);//no es necasrio almacenar
                     //if(MatrizDistanciasModificadas[i][j] <= MMin && prioridadMin < prioridad){//en lugar de matriz deberia se solo una varible temporal
                     float ActualMij = Mij(i,j);
-                    cout << i << " " << j << ": " << ActualMij << endl;
+                    //cout << i << " " << j << ": " << ActualMij << endl;
                     //if(ActualMij <= MMin && prioridadMin < prioridad){//en lugar de matriz deberia se solo una varible temporal
                     if(ActualMij < MMin || (ActualMij == MMin && prioridadMin < prioridad)){
                     //if(ActualMij < MMin || (ActualMij == MMin && prioridadMin < prioridad) || (ActualMij == MMin && prioridadMin == prioridad && i * DimensionMatrizI + j < iMin*DimensionMatrizI + jMin)){//esto es solo apra el que se escoja 1 0 en luagar de 43, sin mabrgo culquiera de los dos son elecciones correctas, esto es solo que me puse quiesquilloso
@@ -84,13 +84,13 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
         //una vez seleccionados el i y j , deberia solo ahcer un cambio para que esto funcione sin mover las otras funciones, o hacer el cambio definitivo, ya que esteo siempre se cumplira!!, lo de que j sea mayo que i
 
 
-        cout << "distancias" << endl;
-        ImprimirArreglo(ArregloId, DimensionMatrizI);
-        ImprimirMatriz(MatrizDistancias, DimensionMatrizI);
+        //cout << "distancias" << endl;
+        //ImprimirArreglo(ArregloId, DimensionMatrizI);
+        //ImprimirMatriz(MatrizDistancias, DimensionMatrizI);
         //cout << "distancias modificadas" << endl;
         //ImprimirArreglo(ArregloId, DimensionMatrizI);
         //ImprimirMatriz(MatrizDistanciasModificadas, DimensionMatrizI);
-        cout << "eleccion del sij " << ArregloId[iMin] << " " << ArregloId[jMin] << endl;//no esta mostrando el nombre, esta mostrando los i j de la matriz
+        //cout << "eleccion del sij " << ArregloId[iMin] << " " << ArregloId[jMin] << endl;//no esta mostrando el nombre, esta mostrando los i j de la matriz
         //ya tengo los nodos mas similares
         //crear un nuevo nodo virtual, reemplazar
         //cout << "eleccion del sij " << iMin << " " << jMin << endl;//no esta mostrando el nombre, esta mostrando los i j de la matriz
@@ -110,9 +110,9 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
     //al final se calculo una nuev matriz de distancias, por lo tanto arreglo ID tiene solo 2 elementos
     //UNION: a ellos los unimos
     //cout << "final de las iteracion hasta n-2" << endl;
-    cout << "distancias" << endl;
-    ImprimirArreglo(ArregloId, DimensionMatrizI);
-    ImprimirMatriz(MatrizDistancias, DimensionMatrizI);
+    //cout << "distancias" << endl;
+    //ImprimirArreglo(ArregloId, DimensionMatrizI);
+    //ImprimirMatriz(MatrizDistancias, DimensionMatrizI);
     //cout << "distancias modificadas" << endl;
     //ImprimirArreglo(ArregloId, DimensionMatrizI);
     //ImprimirMatriz(MatrizDistanciasModificadas, DimensionMatrizI);

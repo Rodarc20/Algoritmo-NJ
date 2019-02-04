@@ -288,6 +288,7 @@ void NJ::DatosIniciales(string * Datos, int n){
 }
 
 void NJ::CalculoDivergenciaThread(int di, int dj){
+    //printf("calculoDivergencia threadid: %d\n", this_thread::get_id());
     for(int i = di; i < dj && i < DimensionMatrizI; i++){
         Divergencias[i] = 0;
         for(int j = 0; j < DimensionMatrizI; j++){
@@ -300,6 +301,7 @@ void NJ::CalculoDivergenciaThread(int di, int dj){
 
 void NJ::CalculoMijThread(int ini, int fin, int MC, DatosMij * minimo){
     //esto podria ser asiganod sobre minimo, y trabajar sobre el desde el inicio
+    //printf("calculoMij threadid: %d\n", this_thread::get_id());
     int iMin = DimensionMatrizI, jMin = DimensionMatrizI;
     int prioridadMin = -1; 
     float MMin = numeric_limits<float>::max();//valor maximo

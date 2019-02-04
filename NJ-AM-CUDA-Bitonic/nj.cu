@@ -321,8 +321,9 @@ int NJ::GenerarArbol(float ** MatrizDistancia, int NumeroElementos, Nodo ** & Ar
         CalcularMijDevice<<<ceil(DimensionMatrizI/256.0), 256>>>(MatrizDistanciasDevice, DivergenciasDevice, MatrizModificadaDevice, DimensionMatrizI, inicialMD, MC, TamValores);
         cudaMemcpy(MatrizModificada, MatrizModificadaDevice, TamValores * sizeof(float), cudaMemcpyDeviceToHost);
         CopiarMijDevice<<<ceil(DimensionMatrizI/256.0), 256>>>(OrdenarDevice, MatrizModificadaDevice, ArregloIdDevice, NumeroNodosReales, DimensionMatrizI, inicialMD, MC, TamValores);
+        bitonicSortMij<<<ceil(TamValores/256.0), 256>>>(OrdenarDevice, TamValores, DimensionMatrizI);
         //bitonicSortMij<<<1, TamValores>>>(OrdenarDevice, TamValores, DimensionMatrizI);
-        bitonicSortMij<<<1, TamValores, TamValores * sizeof(DatosMij)>>>(OrdenarDevice, TamValores, DimensionMatrizI);
+        //bitonicSortMij<<<1, TamValores, TamValores * sizeof(DatosMij)>>>(OrdenarDevice, TamValores, DimensionMatrizI);
         cudaMemcpy(Ordenar, OrdenarDevice, TamValores * sizeof(DatosMij), cudaMemcpyDeviceToHost);
 
         //copiar al arreglo de Datos Mij, cuyos i y j, son los convertidos.
